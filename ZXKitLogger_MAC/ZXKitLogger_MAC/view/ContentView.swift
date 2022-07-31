@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var selectedIndex: Int = 0
+    
     
     @State var logList: [ZXKitLoggerItem] = [ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem()]
     var body: some View {
         NavigationView {
-            NavMenuListView(titleList: ["11111", "22222", "3333"], selectedIndex: $selectedIndex)
+            NavMenuListView()
             ZXKitLoggerList(list: [ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem()])
         }.navigationTitle("ZXKitLogger")
         

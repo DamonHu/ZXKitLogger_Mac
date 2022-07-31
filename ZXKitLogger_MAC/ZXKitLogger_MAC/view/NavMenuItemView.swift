@@ -8,24 +8,17 @@
 import SwiftUI
 
 struct NavMenuItemView: View {
-    var title: String
-    var index: Int
-    @Binding var selectedIndex: Int
-    var singleTap: some Gesture {
-          TapGesture()
-              .onEnded { _ in
-                  self.selectedIndex = index
-              }
-    }
+    var url: URL
+    @Binding var selectedPath: String?
+    
     var body: some View {
         HStack(alignment: .center, spacing: 10) {
             Circle()
-                .foregroundColor(selectedIndex == index ? .green : .gray)
+                .foregroundColor(selectedPath == url.path ? .green : .gray)
                 .frame(width: 10, height: 10, alignment: .leading)
-            Text(title)
-                .foregroundColor(selectedIndex == index ? .black : .gray)
+            Text(url.lastPathComponent)
+                .foregroundColor(selectedPath == url.path ? .black : .gray)
                 .lineLimit(2)
-                .gesture(singleTap)
         }
         
     }
@@ -33,6 +26,6 @@ struct NavMenuItemView: View {
 
 struct NavMenuItemView_Previews: PreviewProvider {
     static var previews: some View {
-        NavMenuItemView(title: "1234", index: 1, selectedIndex: .constant(1))
+        NavMenuItemView(url: URL(string: "https://www.baidu.com")!, selectedPath: .constant(""))
     }
 }
