@@ -12,9 +12,17 @@ struct ZXKitLoggerCell: View {
     
     var body: some View {
         VStack(alignment: .trailing, spacing: 10) {
-            Text(item.getCreateTime())
-                .frame(maxWidth: .infinity, alignment: .center)
+            HStack(alignment: .center, spacing: 10) {
+                Text("")
+                    .padding()
+                    .frame(width: 5, height: 16, alignment: .center)
+                    .background(item.mLogItemType.color())
+                    .cornerRadius(6)
+                Text(item.getCreateTime())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
             Text(item.getFullContentString())
+                .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color.white)
                 .background(item.mLogItemType.color())
@@ -23,6 +31,7 @@ struct ZXKitLoggerCell: View {
                     pasteBoard.clearContents()
                     pasteBoard.setString(item.getFullContentString(), forType: .string)
                 }
+                .cornerRadius(6)
         }
     }
 }
