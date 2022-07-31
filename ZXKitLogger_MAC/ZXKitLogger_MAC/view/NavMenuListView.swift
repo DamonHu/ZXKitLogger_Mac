@@ -9,20 +9,14 @@ import SwiftUI
 
 struct NavMenuListView: View {
     @Environment(\.openURL) var openURL
-    @Binding var list: [(Int, ZXKitLogType, String)]
+    @Binding var list: [ZXKitLoggerItem]
     @State private var fileList: [URL] = []
     @State private var selectedPath: String? {
         willSet {
             if let path = newValue {
                 let tool = SQLiteTool(path: URL.init(fileURLWithPath: path))
-                list = tool.getAllLog().map({ content in
-                    let item = (content.1, ZXKitLogType(rawValue: content.1), content.2)
-                    return item
-                })
+                list = tool.getAllLog()
             }
-            
-            
-            
         }
     }
     @State private var dragOver = false

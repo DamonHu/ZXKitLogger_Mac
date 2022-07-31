@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ZXKitLoggerList: View {
-    @Binding var list: [(Int, ZXKitLogType, String)]
+    @Binding var list: [ZXKitLoggerItem]
     
     var body: some View {
-        List(list, id: \.0) { item in
+        List(list, id: \.id) { item in
             ZXKitLoggerCell(item: item)
-        }
+        }.offset(y: 30)
     }
 }
 

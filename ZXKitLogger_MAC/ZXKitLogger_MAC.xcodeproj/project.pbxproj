@@ -15,7 +15,6 @@
 		E4FB22D828951BF900CAFDD6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4FB22D728951BF900CAFDD6 /* Preview Assets.xcassets */; };
 		E4FB22E22895299D00CAFDD6 /* NavMenuListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E12895299D00CAFDD6 /* NavMenuListView.swift */; };
 		E4FB22E428952E6900CAFDD6 /* ZXKitLoggerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E328952E6900CAFDD6 /* ZXKitLoggerItem.swift */; };
-		E4FB22E628952F9000CAFDD6 /* LogContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E528952F9000CAFDD6 /* LogContent.swift */; };
 		E4FB22E828952FD300CAFDD6 /* String+encode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E728952FD300CAFDD6 /* String+encode.swift */; };
 		E4FB22EA2895304B00CAFDD6 /* ZXKitLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E92895304B00CAFDD6 /* ZXKitLogger.swift */; };
 		E4FB22EC289531E400CAFDD6 /* Data+encode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22EB289531E400CAFDD6 /* Data+encode.swift */; };
@@ -35,7 +34,6 @@
 		E4FB22D928951BF900CAFDD6 /* ZXKitLogger_MAC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZXKitLogger_MAC.entitlements; sourceTree = "<group>"; };
 		E4FB22E12895299D00CAFDD6 /* NavMenuListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavMenuListView.swift; sourceTree = "<group>"; };
 		E4FB22E328952E6900CAFDD6 /* ZXKitLoggerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZXKitLoggerItem.swift; sourceTree = "<group>"; };
-		E4FB22E528952F9000CAFDD6 /* LogContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogContent.swift; sourceTree = "<group>"; };
 		E4FB22E728952FD300CAFDD6 /* String+encode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+encode.swift"; sourceTree = "<group>"; };
 		E4FB22E92895304B00CAFDD6 /* ZXKitLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitLogger.swift; sourceTree = "<group>"; };
 		E4FB22EB289531E400CAFDD6 /* Data+encode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+encode.swift"; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 		E4FB22F428953DE400CAFDD6 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				E4FB22E528952F9000CAFDD6 /* LogContent.swift */,
 				E4FB22E328952E6900CAFDD6 /* ZXKitLoggerItem.swift */,
 			);
 			path = model;
@@ -212,7 +209,6 @@
 				E4FB22EA2895304B00CAFDD6 /* ZXKitLogger.swift in Sources */,
 				E412A685289678BE0072BC84 /* SQLiteTool.swift in Sources */,
 				E4FB22E828952FD300CAFDD6 /* String+encode.swift in Sources */,
-				E4FB22E628952F9000CAFDD6 /* LogContent.swift in Sources */,
 				E4FB22D328951BF800CAFDD6 /* ContentView.swift in Sources */,
 				E4FB22D128951BF800CAFDD6 /* ZXKitLogger_MACApp.swift in Sources */,
 				E4FB22EF2895352200CAFDD6 /* ZXKitLoggerCell.swift in Sources */,

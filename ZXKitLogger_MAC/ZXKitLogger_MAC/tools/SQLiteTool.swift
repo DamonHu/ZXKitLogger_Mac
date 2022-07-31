@@ -17,33 +17,9 @@ class SQLiteTool {
         self.logDBPath = path
         //开始新的数据
         self.logDB = self._openDatabase()
-        self.indexDB = self._openVirtualDatabase()
-        self._createTable()
     }
 
-    //插入数据
-    func insertLog(log: ZXKitLoggerItem) {
-        let insertRowString = String(format: "insert into hdlog(log,logType,time) values ('%@','%d','%f')", log.getFullContentString(), log.mLogItemType.rawValue, Date().timeIntervalSince1970)
-        var insertStatement: OpaquePointer?
-        //第一步
-        let status = sqlite3_prepare_v2(logDB, insertRowString, -1, &insertStatement, nil)
-        if status == SQLITE_OK {
-            //第三步
-            if sqlite3_step(insertStatement) == SQLITE_DONE {
-//                print("插入数据成功")
-            } else {
-                print("插入数据失败")
-            }
-        } else {
-            print("插入时打开数据库失败")
-        }
-        //第四步
-        sqlite3_finalize(insertStatement)
-        //插入数据
-        self._insertVirtualLog(log: log)
-    }
-
-    func getAllLog() -> [(Int, Int, String)] {
+    func getAllLog() -> [ZXKitLoggerItem] {
         let databasePath = self.logDBPath
         guard FileManager.default.fileExists(atPath: databasePath.path) else {
             //数据库文件不存在
@@ -53,18 +29,26 @@ class SQLiteTool {
         let queryString = "SELECT * FROM hdlog;"
         var queryStatement: OpaquePointer?
         //第一步
-        var logList = [(Int, Int, String)]()
+        var logList = [ZXKitLoggerItem]()
         if sqlite3_prepare_v2(queryDB, queryString, -1, &queryStatement, nil) == SQLITE_OK {
             //第二步
             while(sqlite3_step(queryStatement) == SQLITE_ROW) {
                 //第三步
-                let id = sqlite3_column_int(queryStatement, 0)
-                let log = sqlite3_column_text(queryStatement, 1)
-                let logType = sqlite3_column_int(queryStatement, 2)
-//                let time = sqlite3_column_double(queryStatement, 3)
-                if let log = log {
-                    logList.append((Int(id), Int(logType), "\(String(cString: log))"))
-                }
+                let item = ZXKitLoggerItem()
+                item.id = Int(sqlite3_column_int(queryStatement, 0))
+//                let logContent = sqlite3_column_text(queryStatement, 1)
+                item.mLogItemType = ZXKitLogType.init(rawValue: Int(sqlite3_column_int(queryStatement, 2)))
+                item.mLogDebugContent = String(cString: sqlite3_column_text(queryStatement, 4))
+                //更新内容
+                let contentString = String(cString: sqlite3_column_text(queryStatement, 5))
+                item.updateLogContent(type: item.mLogItemType, content: contentString)
+                //时间
+                let time = sqlite3_column_double(queryStatement, 3)
+                item.mCreateDate = Date(timeIntervalSince1970: time)
+//                if let log = log {
+//                    logList.append((Int(id), Int(logType), "\(String(cString: log))"))
+//                }
+                logList.append(item)
             }
         }
         //第四步
@@ -94,86 +78,10 @@ private extension SQLiteTool {
             return nil
         }
     }
-
-    //创建日志表
-    func _createTable() {
-        let createTableString = "create table if not exists 'hdlog' ('id' integer primary key autoincrement not null,'log' text,'logType' integer,'time' float)"
-        var createTableStatement: OpaquePointer?
-        if sqlite3_prepare_v2(logDB, createTableString, -1, &createTableStatement, nil) == SQLITE_OK {
-            // 第二步
-            if sqlite3_step(createTableStatement) == SQLITE_DONE {
-//                print("成功创建表")
-            } else {
-                print("未成功创建表")
-            }
-        } else {
-
-        }
-        //第三步
-        sqlite3_finalize(createTableStatement)
-        //创建虚拟表
-        self._createVirtualTable()
-    }
 }
 
 //MARK: - 全文搜索相关
 private extension SQLiteTool {
-    //获取数据库地址
-    func _getDataVirtualBasePath() -> URL {
-        let path = self.logDBPath
-        return path.appendingPathComponent("totalIndex.db")
-    }
-
-    //打开数据库
-    func _openVirtualDatabase() -> OpaquePointer? {
-        var db: OpaquePointer?
-        let dbPath = self._getDataVirtualBasePath()
-        if sqlite3_open_v2(dbPath.path, &db, SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE|SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK {
-//            print("成功打开数据库\(dbPath.absoluteString)")
-            return db
-        } else {
-            print("打开数据库失败")
-            return nil
-        }
-    }
-    //创建索引虚拟表
-    func _createVirtualTable() {
-        let createTableString = "CREATE VIRTUAL TABLE IF NOT EXISTS logindex USING fts4(log, logType, time, tokenize=unicode61);"
-        var createTableStatement: OpaquePointer?
-        if sqlite3_prepare_v2(self.indexDB, createTableString, -1, &createTableStatement, nil) == SQLITE_OK {
-            // 第二步
-            if sqlite3_step(createTableStatement) == SQLITE_DONE {
-//                print("成功创建虚拟表")
-            } else {
-                print("未成功创建虚拟表")
-            }
-        } else {
-            print("创建虚拟表sssssss", sqlite3_prepare_v2(self.indexDB, createTableString, -1, &createTableStatement, nil), SQLITE_OK, SQLITE_BUSY, SQLITE_ERROR)
-        }
-        //第三步
-        sqlite3_finalize(createTableStatement)
-    }
-    
-    //插入数据
-    func _insertVirtualLog(log: ZXKitLoggerItem) {
-        let insertRowString = String(format: "INSERT OR REPLACE INTO logindex(log,logType,time) VALUES ('%@','%d','%f')", log.getFullContentString(), log.mLogItemType.rawValue, Date().timeIntervalSince1970)
-        var insertStatement: OpaquePointer?
-        //第一步
-        let status = sqlite3_prepare_v2(self.indexDB, insertRowString, -1, &insertStatement, nil)
-        if status == SQLITE_OK {
-            //第三步
-            if sqlite3_step(insertStatement) == SQLITE_DONE {
-//                print("虚拟库插入数据成功")
-            } else {
-                print("插入数据失败")
-            }
-        } else {
-            print("插入时打开虚拟数据库失败")
-        }
-        //第四步
-        sqlite3_finalize(insertStatement)
-    }
-    
     func _searchLog(keyword: String) -> [String] {
         let databasePath = self.logDBPath
         guard FileManager.default.fileExists(atPath: databasePath.path) else {

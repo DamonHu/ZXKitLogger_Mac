@@ -15,15 +15,34 @@ enum Section: CaseIterable {
 }
 ///log的内容
 public class ZXKitLoggerItem {
-    let identifier = UUID()                                 //用于hash计算
-    public var mLogItemType = ZXKitLogType.info             //log类型
-    public var mLogDebugContent: String = "1111111111"              //log输出的文件、行数、函数名
-    public var mLogContent: Any?                         //log的内容
-    public var mCreateDate = Date()                      //log日期
+    var id: Int = 0
+    var mLogItemType = ZXKitLogType.info             //log类型
+    var mLogDebugContent: String = ""              //log输出的文件、行数、函数名
+    private(set) var mLogContent: String = ""          //log的内容
+    var mCreateDate = Date()                      //log日期
     
     private var mCurrentHighlightString = ""            //当前需要高亮的字符串
     private var mCacheHasHighlightString = false        //上次查询是否包含高亮的字符串
     var mCacheHighlightCompleteString = NSMutableAttributedString()   //上次包含高亮支付的富文本
+    
+    
+}
+
+extension ZXKitLoggerItem {
+    func updateLogContent(type: ZXKitLogType, content: String) {
+        if type == .privacy {
+            self.mLogContent = content.aesCBCDecrypt(password: ZXKitLogger.privacyLogPassword, ivString: ZXKitLogger.privacyLogIv, encodeType: ZXKitLogger.privacyResultEncodeType) ?? "Invalid encryption"
+        } else {
+            self.mLogContent = content
+        }
+    }
+    
+    func getCreateTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        let dateStr = dateFormatter.string(from: mCreateDate)
+        return dateStr
+    }
     
     //获取完整的输出内容
     public func getFullContentString() -> String {
@@ -32,18 +51,7 @@ public class ZXKitLoggerItem {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         let dateStr = dateFormatter.string(from: mCreateDate)
         //内容
-        var contentString = ""
-        if let mContent = mLogContent  {
-            if mContent is LogContent {
-                contentString = (mContent as! LogContent).logStringValue
-            } else {
-                contentString = "\(mContent)"
-            }
-            if self.mLogItemType == .privacy {
-                contentString = contentString.aesCBCEncrypt(password: ZXKitLogger.privacyLogPassword, ivString: ZXKitLogger.privacyLogIv, encodeType: ZXKitLogger.privacyResultEncodeType) ?? "Invalid encryption"
-            }
-        }
-        
+        let contentString = self.mLogContent
         switch mLogItemType {
             case .info:
                 return dateStr + " ---- ✅✅ ---- " +  mLogDebugContent + "\n" + contentString + "\n"
@@ -95,18 +103,18 @@ public class ZXKitLoggerItem {
     }
 }
 
-extension ZXKitLoggerItem: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(identifier)
-    }
-
-    public static func ==(lhs: ZXKitLoggerItem, rhs: ZXKitLoggerItem) -> Bool {
-        return lhs.identifier == rhs.identifier
-    }
-
-    func contains(query: String?) -> Bool {
-        guard let query = query else { return true }
-        guard !query.isEmpty else { return true }
-        return self.getFullContentString().contains(query)
-    }
-}
+//extension ZXKitLoggerItem: Hashable {
+//    public func hash(into hasher: inout Hasher) {
+//        hasher.combine(identifier)
+//    }
+//
+//    public static func ==(lhs: ZXKitLoggerItem, rhs: ZXKitLoggerItem) -> Bool {
+//        return lhs.identifier == rhs.identifier
+//    }
+//
+//    func contains(query: String?) -> Bool {
+//        guard let query = query else { return true }
+//        guard !query.isEmpty else { return true }
+//        return self.getFullContentString().contains(query)
+//    }
+//}

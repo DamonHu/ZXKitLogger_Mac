@@ -8,18 +8,27 @@
 import SwiftUI
 
 struct ZXKitLoggerCell: View {
-    var item: (Int, ZXKitLogType, String)
+    var item: ZXKitLoggerItem
     
     var body: some View {
-        Text(item.2)
-            .frame(maxWidth: .infinity)
-            .foregroundColor(item.1.color())
-            
+        VStack(alignment: .trailing, spacing: 10) {
+            Text(item.getCreateTime())
+                .frame(maxWidth: .infinity, alignment: .center)
+            Text(item.getFullContentString())
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(Color.white)
+                .background(item.mLogItemType.color())
+                .onTapGesture {
+                    let pasteBoard = NSPasteboard.general
+                    pasteBoard.clearContents()
+                    pasteBoard.setString(item.getFullContentString(), forType: .string)
+                }
+        }
     }
 }
 
 struct ZXKitLoggerCell_Previews: PreviewProvider {
     static var previews: some View {
-        ZXKitLoggerCell(item: (0, ZXKitLogType.debug, ""))
+        ZXKitLoggerCell(item: ZXKitLoggerItem())
     }
 }

@@ -30,11 +30,11 @@ extension ZXKitLogType {
         case .info:
             return Color(red: 80.0/255.0, green: 216.0/255.0, blue: 144.0/255.0)
         case .warn:
-            return Color(red: 246.0/255.0, green: 244.0/255.0, blue: 157.0/255.0)
+            return Color(red: 255.0/255.0, green: 191.0/255.0, blue: 0.0/255.0)
         case .error:
-            return Color(red: 255.0/255.0, green: 175.0/255.0, blue: 175.0/255.0)
+            return Color(red: 229.0/255.0, green: 43.0/255.0, blue: 80.0/255.0)
         case .privacy:
-            return Color(red: 66.0/255.0, green: 230.0/255.0, blue: 164.0/255.0)
+            return Color(red: 165.0/255.0, green: 42.0/255.0, blue: 42.0/255.0)
         default:
             return .black
         }
