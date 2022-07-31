@@ -1,6 +1,6 @@
 # ZXKitLogger_Mac
 
-![](https://img.shields.io/badge/platform-mac-os-brightgreen) ![](https://img.shields.io/badge/interface-swiftUI-brightgreen) ![](https://img.shields.io/badge/license-MIT-brightgreen) 
+![](https://img.shields.io/badge/platform-MacOS-brightgreen) ![](https://img.shields.io/badge/interface-swiftUI-brightgreen) ![](https://img.shields.io/badge/license-MIT-brightgreen) 
 
 ![](./preview/Jietu20220731-212644.png)
 
