@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ZXKitLoggerList: View {
-    var list: [ZXKitLoggerItem]
+    @Binding var list: [ZXKitLoggerItem]
     
     var body: some View {
         List(list, id: \.identifier) { item in
@@ -19,6 +19,6 @@ struct ZXKitLoggerList: View {
 
 struct ZXKitLoggerList_Previews: PreviewProvider {
     static var previews: some View {
-        ZXKitLoggerList(list: [ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem(), ZXKitLoggerItem()])
+        ZXKitLoggerList(list: .constant([]))
     }
 }

@@ -9,9 +9,16 @@ import SwiftUI
 
 struct NavMenuListView: View {
     @Environment(\.openURL) var openURL
+    @Binding var list: [ZXKitLoggerItem]
     @State private var fileList: [URL] = []
-    @State private var selectedPath: String?
+    @State private var selectedPath: String? {
+        willSet {
+            print(newValue)
+            
+        }
+    }
     @State private var dragOver = false
+    @State private var showAlert = false
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -48,29 +55,27 @@ struct NavMenuListView: View {
             providers.first?.loadDataRepresentation(forTypeIdentifier: "public.file-url", completionHandler: { (data, error) in
                 
                 if let data = data, let path = String(data: data, encoding: String.Encoding.utf8), let url = URL(string: path) {
+                    if !url.pathExtension.hasPrefix("db") && !url.pathExtension.hasPrefix("json") {
+                        showAlert = true
+                        return
+                    }
                     selectedPath = url.path
                     if !self.fileList.contains(url) {
                         self.fileList.insert(url, at: 0)
                     }
                     
-//                    let image = NSImage(contentsOf: url)
-//
-//                    DispatchQueue.main.async {
-//
-//                        self.image = image
-//
-//                    }
-                    
                 }
                 
             })
             return true
+        }.alert("仅支持.db和.json文件", isPresented: $showAlert) {
+            
         }
     }
 }
 
 struct NavMenuListView_Previews: PreviewProvider {
     static var previews: some View {
-        NavMenuListView()
+        NavMenuListView(list: .constant([]))
     }
 }
