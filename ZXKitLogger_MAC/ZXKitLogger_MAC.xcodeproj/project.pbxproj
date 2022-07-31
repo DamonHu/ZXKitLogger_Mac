@@ -1,0 +1,409 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E412A6832896109D0072BC84 /* FileTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412A6822896109D0072BC84 /* FileTools.swift */; };
+		E4FB22D128951BF800CAFDD6 /* ZXKitLogger_MACApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22D028951BF800CAFDD6 /* ZXKitLogger_MACApp.swift */; };
+		E4FB22D328951BF800CAFDD6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22D228951BF800CAFDD6 /* ContentView.swift */; };
+		E4FB22D528951BF900CAFDD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4FB22D428951BF900CAFDD6 /* Assets.xcassets */; };
+		E4FB22D828951BF900CAFDD6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4FB22D728951BF900CAFDD6 /* Preview Assets.xcassets */; };
+		E4FB22E22895299D00CAFDD6 /* NavMenuListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E12895299D00CAFDD6 /* NavMenuListView.swift */; };
+		E4FB22E428952E6900CAFDD6 /* ZXKitLoggerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E328952E6900CAFDD6 /* ZXKitLoggerItem.swift */; };
+		E4FB22E628952F9000CAFDD6 /* LogContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E528952F9000CAFDD6 /* LogContent.swift */; };
+		E4FB22E828952FD300CAFDD6 /* String+encode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E728952FD300CAFDD6 /* String+encode.swift */; };
+		E4FB22EA2895304B00CAFDD6 /* ZXKitLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22E92895304B00CAFDD6 /* ZXKitLogger.swift */; };
+		E4FB22EC289531E400CAFDD6 /* Data+encode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22EB289531E400CAFDD6 /* Data+encode.swift */; };
+		E4FB22EF2895352200CAFDD6 /* ZXKitLoggerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22EE2895352200CAFDD6 /* ZXKitLoggerCell.swift */; };
+		E4FB22F1289538B200CAFDD6 /* ZXKitLoggerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22F0289538B200CAFDD6 /* ZXKitLoggerList.swift */; };
+		E4FB22F628953E1E00CAFDD6 /* NavMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22F528953E1E00CAFDD6 /* NavMenuItemView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E412A6822896109D0072BC84 /* FileTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTools.swift; sourceTree = "<group>"; };
+		E4FB22CD28951BF800CAFDD6 /* ZXKitLogger_MAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXKitLogger_MAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4FB22D028951BF800CAFDD6 /* ZXKitLogger_MACApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitLogger_MACApp.swift; sourceTree = "<group>"; };
+		E4FB22D228951BF800CAFDD6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E4FB22D428951BF900CAFDD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E4FB22D728951BF900CAFDD6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E4FB22D928951BF900CAFDD6 /* ZXKitLogger_MAC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZXKitLogger_MAC.entitlements; sourceTree = "<group>"; };
+		E4FB22E12895299D00CAFDD6 /* NavMenuListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavMenuListView.swift; sourceTree = "<group>"; };
+		E4FB22E328952E6900CAFDD6 /* ZXKitLoggerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZXKitLoggerItem.swift; sourceTree = "<group>"; };
+		E4FB22E528952F9000CAFDD6 /* LogContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogContent.swift; sourceTree = "<group>"; };
+		E4FB22E728952FD300CAFDD6 /* String+encode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+encode.swift"; sourceTree = "<group>"; };
+		E4FB22E92895304B00CAFDD6 /* ZXKitLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitLogger.swift; sourceTree = "<group>"; };
+		E4FB22EB289531E400CAFDD6 /* Data+encode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+encode.swift"; sourceTree = "<group>"; };
+		E4FB22EE2895352200CAFDD6 /* ZXKitLoggerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitLoggerCell.swift; sourceTree = "<group>"; };
+		E4FB22F0289538B200CAFDD6 /* ZXKitLoggerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitLoggerList.swift; sourceTree = "<group>"; };
+		E4FB22F528953E1E00CAFDD6 /* NavMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavMenuItemView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E4FB22CA28951BF800CAFDD6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E4FB22C428951BF800CAFDD6 = {
+			isa = PBXGroup;
+			children = (
+				E4FB22CF28951BF800CAFDD6 /* ZXKitLogger_MAC */,
+				E4FB22CE28951BF800CAFDD6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E4FB22CE28951BF800CAFDD6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E4FB22CD28951BF800CAFDD6 /* ZXKitLogger_MAC.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E4FB22CF28951BF800CAFDD6 /* ZXKitLogger_MAC */ = {
+			isa = PBXGroup;
+			children = (
+				E4FB22F428953DE400CAFDD6 /* model */,
+				E4FB22F328953DC100CAFDD6 /* view */,
+				E4FB22F228953D8700CAFDD6 /* tools */,
+				E4FB22ED2895340000CAFDD6 /* extension */,
+				E4FB22D028951BF800CAFDD6 /* ZXKitLogger_MACApp.swift */,
+				E4FB22E92895304B00CAFDD6 /* ZXKitLogger.swift */,
+				E4FB22D428951BF900CAFDD6 /* Assets.xcassets */,
+				E4FB22D928951BF900CAFDD6 /* ZXKitLogger_MAC.entitlements */,
+				E4FB22D628951BF900CAFDD6 /* Preview Content */,
+			);
+			path = ZXKitLogger_MAC;
+			sourceTree = "<group>";
+		};
+		E4FB22D628951BF900CAFDD6 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E4FB22D728951BF900CAFDD6 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E4FB22ED2895340000CAFDD6 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				E4FB22E728952FD300CAFDD6 /* String+encode.swift */,
+				E4FB22EB289531E400CAFDD6 /* Data+encode.swift */,
+			);
+			path = extension;
+			sourceTree = "<group>";
+		};
+		E4FB22F228953D8700CAFDD6 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				E412A6822896109D0072BC84 /* FileTools.swift */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
+		E4FB22F328953DC100CAFDD6 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				E4FB22D228951BF800CAFDD6 /* ContentView.swift */,
+				E4FB22E12895299D00CAFDD6 /* NavMenuListView.swift */,
+				E4FB22EE2895352200CAFDD6 /* ZXKitLoggerCell.swift */,
+				E4FB22F0289538B200CAFDD6 /* ZXKitLoggerList.swift */,
+				E4FB22F528953E1E00CAFDD6 /* NavMenuItemView.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		E4FB22F428953DE400CAFDD6 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				E4FB22E528952F9000CAFDD6 /* LogContent.swift */,
+				E4FB22E328952E6900CAFDD6 /* ZXKitLoggerItem.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E4FB22CC28951BF800CAFDD6 /* ZXKitLogger_MAC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4FB22DC28951BF900CAFDD6 /* Build configuration list for PBXNativeTarget "ZXKitLogger_MAC" */;
+			buildPhases = (
+				E4FB22C928951BF800CAFDD6 /* Sources */,
+				E4FB22CA28951BF800CAFDD6 /* Frameworks */,
+				E4FB22CB28951BF800CAFDD6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZXKitLogger_MAC;
+			productName = ZXKitLogger_MAC;
+			productReference = E4FB22CD28951BF800CAFDD6 /* ZXKitLogger_MAC.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E4FB22C528951BF800CAFDD6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					E4FB22CC28951BF800CAFDD6 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+				};
+			};
+			buildConfigurationList = E4FB22C828951BF800CAFDD6 /* Build configuration list for PBXProject "ZXKitLogger_MAC" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E4FB22C428951BF800CAFDD6;
+			productRefGroup = E4FB22CE28951BF800CAFDD6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E4FB22CC28951BF800CAFDD6 /* ZXKitLogger_MAC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E4FB22CB28951BF800CAFDD6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4FB22D828951BF900CAFDD6 /* Preview Assets.xcassets in Resources */,
+				E4FB22D528951BF900CAFDD6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E4FB22C928951BF800CAFDD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4FB22F628953E1E00CAFDD6 /* NavMenuItemView.swift in Sources */,
+				E4FB22E22895299D00CAFDD6 /* NavMenuListView.swift in Sources */,
+				E4FB22E428952E6900CAFDD6 /* ZXKitLoggerItem.swift in Sources */,
+				E412A6832896109D0072BC84 /* FileTools.swift in Sources */,
+				E4FB22F1289538B200CAFDD6 /* ZXKitLoggerList.swift in Sources */,
+				E4FB22EA2895304B00CAFDD6 /* ZXKitLogger.swift in Sources */,
+				E4FB22E828952FD300CAFDD6 /* String+encode.swift in Sources */,
+				E4FB22E628952F9000CAFDD6 /* LogContent.swift in Sources */,
+				E4FB22D328951BF800CAFDD6 /* ContentView.swift in Sources */,
+				E4FB22D128951BF800CAFDD6 /* ZXKitLogger_MACApp.swift in Sources */,
+				E4FB22EF2895352200CAFDD6 /* ZXKitLoggerCell.swift in Sources */,
+				E4FB22EC289531E400CAFDD6 /* Data+encode.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E4FB22DA28951BF900CAFDD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E4FB22DB28951BF900CAFDD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		E4FB22DD28951BF900CAFDD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ZXKitLogger_MAC/ZXKitLogger_MAC.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ZXKitLogger_MAC/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lazypig.ZXKitLogger-MAC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E4FB22DE28951BF900CAFDD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ZXKitLogger_MAC/ZXKitLogger_MAC.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ZXKitLogger_MAC/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lazypig.ZXKitLogger-MAC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E4FB22C828951BF800CAFDD6 /* Build configuration list for PBXProject "ZXKitLogger_MAC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4FB22DA28951BF900CAFDD6 /* Debug */,
+				E4FB22DB28951BF900CAFDD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4FB22DC28951BF900CAFDD6 /* Build configuration list for PBXNativeTarget "ZXKitLogger_MAC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4FB22DD28951BF900CAFDD6 /* Debug */,
+				E4FB22DE28951BF900CAFDD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E4FB22C528951BF800CAFDD6 /* Project object */;
+}
