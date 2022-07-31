@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E412A6832896109D0072BC84 /* FileTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412A6822896109D0072BC84 /* FileTools.swift */; };
+		E412A685289678BE0072BC84 /* SQLiteTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412A684289678BE0072BC84 /* SQLiteTool.swift */; };
 		E4FB22D128951BF800CAFDD6 /* ZXKitLogger_MACApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22D028951BF800CAFDD6 /* ZXKitLogger_MACApp.swift */; };
 		E4FB22D328951BF800CAFDD6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22D228951BF800CAFDD6 /* ContentView.swift */; };
 		E4FB22D528951BF900CAFDD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4FB22D428951BF900CAFDD6 /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		E412A6822896109D0072BC84 /* FileTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTools.swift; sourceTree = "<group>"; };
+		E412A684289678BE0072BC84 /* SQLiteTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteTool.swift; sourceTree = "<group>"; };
 		E4FB22CD28951BF800CAFDD6 /* ZXKitLogger_MAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXKitLogger_MAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4FB22D028951BF800CAFDD6 /* ZXKitLogger_MACApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitLogger_MACApp.swift; sourceTree = "<group>"; };
 		E4FB22D228951BF800CAFDD6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				E412A6822896109D0072BC84 /* FileTools.swift */,
+				E412A684289678BE0072BC84 /* SQLiteTool.swift */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				E412A6832896109D0072BC84 /* FileTools.swift in Sources */,
 				E4FB22F1289538B200CAFDD6 /* ZXKitLoggerList.swift in Sources */,
 				E4FB22EA2895304B00CAFDD6 /* ZXKitLogger.swift in Sources */,
+				E412A685289678BE0072BC84 /* SQLiteTool.swift in Sources */,
 				E4FB22E828952FD300CAFDD6 /* String+encode.swift in Sources */,
 				E4FB22E628952F9000CAFDD6 /* LogContent.swift in Sources */,
 				E4FB22D328951BF800CAFDD6 /* ContentView.swift in Sources */,

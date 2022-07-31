@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct ZXKitLoggerCell: View {
-    var item: ZXKitLoggerItem
+    var item: (Int, ZXKitLogType, String)
     
     var body: some View {
-        Text(item.getFullContentString())
-            .frame(maxWidth: 400)
-            .foregroundColor(.red)
+        Text(item.2)
+            .frame(maxWidth: .infinity)
+            .foregroundColor(item.1.color())
+            
     }
 }
 
 struct ZXKitLoggerCell_Previews: PreviewProvider {
     static var previews: some View {
-        ZXKitLoggerCell(item: ZXKitLoggerItem())
+        ZXKitLoggerCell(item: (0, ZXKitLogType.debug, ""))
     }
 }

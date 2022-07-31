@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var list: [ZXKitLoggerItem] = []
+    @State var list: [(Int, ZXKitLogType, String)] = []
     
     var body: some View {
         NavigationView {

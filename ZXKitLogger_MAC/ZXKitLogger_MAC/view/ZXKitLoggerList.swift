@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ZXKitLoggerList: View {
-    @Binding var list: [ZXKitLoggerItem]
+    @Binding var list: [(Int, ZXKitLogType, String)]
     
     var body: some View {
-        List(list, id: \.identifier) { item in
+        List(list, id: \.0) { item in
             ZXKitLoggerCell(item: item)
         }
     }

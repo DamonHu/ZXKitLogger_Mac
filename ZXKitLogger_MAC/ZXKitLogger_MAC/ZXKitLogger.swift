@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 ///log的级别，对应不同的颜色
 public struct ZXKitLogType : OptionSet {
@@ -18,6 +19,25 @@ public struct ZXKitLogType : OptionSet {
     public let rawValue: Int
     public init(rawValue: Int) {
         self.rawValue = rawValue
+    }
+}
+
+extension ZXKitLogType {
+    func color() -> Color {
+        switch self {
+        case .debug:
+            return Color(red: 191.0/255.0, green: 139.0/255.0, blue: 251.0/255.0)
+        case .info:
+            return Color(red: 80.0/255.0, green: 216.0/255.0, blue: 144.0/255.0)
+        case .warn:
+            return Color(red: 246.0/255.0, green: 244.0/255.0, blue: 157.0/255.0)
+        case .error:
+            return Color(red: 255.0/255.0, green: 175.0/255.0, blue: 175.0/255.0)
+        case .privacy:
+            return Color(red: 66.0/255.0, green: 230.0/255.0, blue: 164.0/255.0)
+        default:
+            return .black
+        }
     }
 }
 
