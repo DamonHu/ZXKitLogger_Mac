@@ -1,5 +1,7 @@
 # ZXKitLogger_Mac
 
+![](https://img.shields.io/badge/platform-mac-os-brightgreen) ![](https://img.shields.io/badge/interface-swiftUI-brightgreen) ![](https://img.shields.io/badge/license-MIT-brightgreen) 
+
 ![](./preview/Jietu20220731-212644.png)
 
 用于方便的查看iOS手机端的调试日志库 [ZXKitLogger](https://github.com/DamonHu/ZXKitLogger)生成的原始log日志。
