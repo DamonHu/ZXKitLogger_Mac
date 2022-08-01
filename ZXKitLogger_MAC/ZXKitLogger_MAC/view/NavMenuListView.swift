@@ -18,12 +18,14 @@ struct NavMenuListView: View {
             if let path = newValue {
                 let tool = SQLiteTool(path: URL.init(fileURLWithPath: path))
                 list = tool.getAllLog()
+            } else {
+                list = []
             }
         }
     }
     @State private var dragOver = false
     @State private var showAlert = false
-    @State private var ipText = ""
+    @State private var hostText = ""
     @State private var portText = ""
 
     var body: some View {
@@ -32,10 +34,12 @@ struct NavMenuListView: View {
                 HStack(alignment: .center, spacing: 0) {
                     Button("本地日志") {
                         self.isLocal = true
+                        self.list = []
                     }.background(isLocal ? .green : .gray)
                         .foregroundColor(.white)
                         .frame(height: 40)
                     Button("远程日志") {
+                        self.selectedPath = nil
                         self.isLocal = false
                     }.background(isLocal ? .gray : .green)
                         .foregroundColor(.white)
@@ -97,11 +101,13 @@ struct NavMenuListView: View {
                 HStack(alignment: .center, spacing: 0) {
                     Button("本地日志") {
                         self.isLocal = true
+                        self.list = []
                     }.background(isLocal ? .green : .gray)
                         .foregroundColor(.white)
                         .frame(height: 40)
                     Button("远程日志") {
                         self.isLocal = false
+                        self.selectedPath = nil
                     }.background(isLocal ? .gray : .green)
                         .foregroundColor(.white)
                         .frame(height: 40)
@@ -110,7 +116,7 @@ struct NavMenuListView: View {
                     VStack(alignment: .trailing, spacing: 10) {
                         HStack(alignment: .center, spacing: 4) {
                             Text("host")
-                            TextField("127.0.0.1", text: $ipText)
+                            TextField("127.0.0.1", text: $hostText)
                                 .frame(height: 26)
                                 .border(.gray, width: 0.5)
                         }
@@ -122,7 +128,12 @@ struct NavMenuListView: View {
                         }
                         HStack(alignment: .center, spacing: 4) {
                             Button("连接") {
-                                
+                                ZXKitLogger.socketHost = hostText
+                                ZXKitLogger.socketPort = UInt16(portText) ?? 888
+                                ZXKitloggerClientSocket.shared.socketDidReceiveHandler = { item in
+                                    self.list.insert(item, at: 0)
+                                }
+                                ZXKitloggerClientSocket.shared.startSocket()
                             }.background(.green)
                                 .foregroundColor(.white)
                                 .frame(height: 40)

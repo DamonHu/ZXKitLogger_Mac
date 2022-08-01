@@ -8,10 +8,12 @@
 import Foundation
 import CocoaAsyncSocket
 
-class ZXKitloggerClientSocket: NSObject {
-    public static let shared = ZXKitloggerClientSocket()
-    //TODO: 回调
+typealias SocketDidReceiveHandler = (_ item: ZXKitLoggerItem) -> ()
 
+class ZXKitloggerClientSocket: NSObject {
+    static let shared = ZXKitloggerClientSocket()
+    var socketDidReceiveHandler: SocketDidReceiveHandler?
+    
     private lazy var clientSocket: GCDAsyncUdpSocket = {
         let queue = DispatchQueue.init(label: "zxkitlogger_socket")
         let socket = GCDAsyncUdpSocket(delegate: self, delegateQueue: queue, socketQueue: queue)
@@ -38,15 +40,19 @@ class ZXKitloggerClientSocket: NSObject {
 extension ZXKitloggerClientSocket: GCDAsyncUdpSocketDelegate {
     func udpSocket(_ sock: GCDAsyncUdpSocket, didReceive data: Data, fromAddress address: Data, withFilterContext filterContext: Any?) {
         //接受到需要log传输的消息，记录
-        guard let receiveMsg = String(data: data, encoding: .utf8), receiveMsg == "ZXKITLOGGER" else {
+        guard let receiveMsg = String(data: data, encoding: .utf8), let handler = self.socketDidReceiveHandler else {
             return
         }
-//        //添加到address，重复的ip不添加
-//        if self.addressList.contains(where: { data in
-//            GCDAsyncUdpSocket.host(fromAddress: data) ==  GCDAsyncUdpSocket.host(fromAddress: address)
-//        }) {
-//            return
-//        }
-//        self.addressList.append(address)
+        var msgList = receiveMsg.split(separator: "|")
+        guard msgList.count >= 4, let itemType = Int(msgList.first!)  else {
+            return
+        }
+        let item = ZXKitLoggerItem()
+        item.mLogItemType = ZXKitLogType(rawValue: itemType)
+        item.mLogDebugContent = String(msgList[1])
+        item.mCreateDate = Date(timeIntervalSince1970: TimeInterval(msgList[2]) ?? 0)
+        msgList.removeFirst(3)
+        item.updateLogContent(type: item.mLogItemType, content: msgList.joined(separator: "|"))
+        handler(item)
     }
 }
