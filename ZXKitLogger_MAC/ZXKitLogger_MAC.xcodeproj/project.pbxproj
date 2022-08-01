@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E412A6832896109D0072BC84 /* FileTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412A6822896109D0072BC84 /* FileTools.swift */; };
+		53466A5D9661FAF808A6E8DE /* Pods_ZXKitLogger_MAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BAF7CA5AD066AD2E2DE6EAB /* Pods_ZXKitLogger_MAC.framework */; };
 		E412A685289678BE0072BC84 /* SQLiteTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412A684289678BE0072BC84 /* SQLiteTool.swift */; };
+		E4A014A32897D0E80042C5F4 /* ZXKitloggerClientSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A014A22897D0E80042C5F4 /* ZXKitloggerClientSocket.swift */; };
 		E4FB22D128951BF800CAFDD6 /* ZXKitLogger_MACApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22D028951BF800CAFDD6 /* ZXKitLogger_MACApp.swift */; };
 		E4FB22D328951BF800CAFDD6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FB22D228951BF800CAFDD6 /* ContentView.swift */; };
 		E4FB22D528951BF900CAFDD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4FB22D428951BF900CAFDD6 /* Assets.xcassets */; };
@@ -24,8 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E412A6822896109D0072BC84 /* FileTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTools.swift; sourceTree = "<group>"; };
+		1BAF7CA5AD066AD2E2DE6EAB /* Pods_ZXKitLogger_MAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZXKitLogger_MAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23C4D90170BDA71753B9A710 /* Pods-ZXKitLogger_MAC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXKitLogger_MAC.release.xcconfig"; path = "Target Support Files/Pods-ZXKitLogger_MAC/Pods-ZXKitLogger_MAC.release.xcconfig"; sourceTree = "<group>"; };
+		6F99287F9EEE7551DAFDA44D /* Pods-ZXKitLogger_MAC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXKitLogger_MAC.debug.xcconfig"; path = "Target Support Files/Pods-ZXKitLogger_MAC/Pods-ZXKitLogger_MAC.debug.xcconfig"; sourceTree = "<group>"; };
 		E412A684289678BE0072BC84 /* SQLiteTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteTool.swift; sourceTree = "<group>"; };
+		E4A014A22897D0E80042C5F4 /* ZXKitloggerClientSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitloggerClientSocket.swift; sourceTree = "<group>"; };
 		E4FB22CD28951BF800CAFDD6 /* ZXKitLogger_MAC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXKitLogger_MAC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4FB22D028951BF800CAFDD6 /* ZXKitLogger_MACApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitLogger_MACApp.swift; sourceTree = "<group>"; };
 		E4FB22D228951BF800CAFDD6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -47,17 +51,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53466A5D9661FAF808A6E8DE /* Pods_ZXKitLogger_MAC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E9D27A0D36079496875C46C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1BAF7CA5AD066AD2E2DE6EAB /* Pods_ZXKitLogger_MAC.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DBC542423B75172B40039404 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6F99287F9EEE7551DAFDA44D /* Pods-ZXKitLogger_MAC.debug.xcconfig */,
+				23C4D90170BDA71753B9A710 /* Pods-ZXKitLogger_MAC.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		E4FB22C428951BF800CAFDD6 = {
 			isa = PBXGroup;
 			children = (
 				E4FB22CF28951BF800CAFDD6 /* ZXKitLogger_MAC */,
 				E4FB22CE28951BF800CAFDD6 /* Products */,
+				DBC542423B75172B40039404 /* Pods */,
+				9E9D27A0D36079496875C46C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,8 +129,8 @@
 		E4FB22F228953D8700CAFDD6 /* tools */ = {
 			isa = PBXGroup;
 			children = (
-				E412A6822896109D0072BC84 /* FileTools.swift */,
 				E412A684289678BE0072BC84 /* SQLiteTool.swift */,
+				E4A014A22897D0E80042C5F4 /* ZXKitloggerClientSocket.swift */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -138,9 +162,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E4FB22DC28951BF900CAFDD6 /* Build configuration list for PBXNativeTarget "ZXKitLogger_MAC" */;
 			buildPhases = (
+				2086C2C01EAE701BF49973AF /* [CP] Check Pods Manifest.lock */,
 				E4FB22C928951BF800CAFDD6 /* Sources */,
 				E4FB22CA28951BF800CAFDD6 /* Frameworks */,
 				E4FB22CB28951BF800CAFDD6 /* Resources */,
+				F341E5B61B898F39B9B1F3DE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,6 +222,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2086C2C01EAE701BF49973AF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ZXKitLogger_MAC-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F341E5B61B898F39B9B1F3DE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZXKitLogger_MAC/Pods-ZXKitLogger_MAC-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ZXKitLogger_MAC/Pods-ZXKitLogger_MAC-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ZXKitLogger_MAC/Pods-ZXKitLogger_MAC-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E4FB22C928951BF800CAFDD6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -203,8 +271,8 @@
 			files = (
 				E4FB22F628953E1E00CAFDD6 /* NavMenuItemView.swift in Sources */,
 				E4FB22E22895299D00CAFDD6 /* NavMenuListView.swift in Sources */,
+				E4A014A32897D0E80042C5F4 /* ZXKitloggerClientSocket.swift in Sources */,
 				E4FB22E428952E6900CAFDD6 /* ZXKitLoggerItem.swift in Sources */,
-				E412A6832896109D0072BC84 /* FileTools.swift in Sources */,
 				E4FB22F1289538B200CAFDD6 /* ZXKitLoggerList.swift in Sources */,
 				E4FB22EA2895304B00CAFDD6 /* ZXKitLogger.swift in Sources */,
 				E412A685289678BE0072BC84 /* SQLiteTool.swift in Sources */,
@@ -334,6 +402,7 @@
 		};
 		E4FB22DD28951BF900CAFDD6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F99287F9EEE7551DAFDA44D /* Pods-ZXKitLogger_MAC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -359,6 +428,7 @@
 		};
 		E4FB22DE28951BF900CAFDD6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23C4D90170BDA71753B9A710 /* Pods-ZXKitLogger_MAC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

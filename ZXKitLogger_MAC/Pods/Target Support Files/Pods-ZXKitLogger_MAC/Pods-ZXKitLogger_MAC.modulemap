@@ -1,0 +1,6 @@
+framework module Pods_ZXKitLogger_MAC {
+  umbrella header "Pods-ZXKitLogger_MAC-umbrella.h"
+
+  export *
+  module * { export * }
+}

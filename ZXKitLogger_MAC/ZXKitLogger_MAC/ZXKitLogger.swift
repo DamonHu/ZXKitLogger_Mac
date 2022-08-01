@@ -51,4 +51,8 @@ public class ZXKitLogger {
     public static var privacyLogPassword = "12345678901234561234567890123456"
     public static var privacyLogIv = "abcdefghijklmnop"
     public static var privacyResultEncodeType = ZXKitUtilEncodeType.hex
+
+    public static var socketHost: String = "" //UDP的端口
+    public static var socketPort: UInt16 = 888 //UDP的端口
+
 }
