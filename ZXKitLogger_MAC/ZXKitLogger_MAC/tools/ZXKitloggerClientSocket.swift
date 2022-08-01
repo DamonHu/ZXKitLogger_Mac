@@ -38,11 +38,26 @@ class ZXKitloggerClientSocket: NSObject {
 }
 
 extension ZXKitloggerClientSocket: GCDAsyncUdpSocketDelegate {
+    func udpSocket(_ sock: GCDAsyncUdpSocket, didConnectToAddress address: Data) {
+        print("address")
+    }
+    func udpSocket(_ sock: GCDAsyncUdpSocket, didNotConnect error: Error?) {
+        print("didNotConnect", error)
+    }
+    func udpSocket(_ sock: GCDAsyncUdpSocket, didSendDataWithTag tag: Int) {
+        print("didSend")
+    }
+    func udpSocket(_ sock: GCDAsyncUdpSocket, didNotSendDataWithTag tag: Int, dueToError error: Error?) {
+        print("didNotSendDataWithTag", error)
+    }
+    
     func udpSocket(_ sock: GCDAsyncUdpSocket, didReceive data: Data, fromAddress address: Data, withFilterContext filterContext: Any?) {
+        print("didReceive", String(data: data, encoding: .utf8))
         //接受到需要log传输的消息，记录
         guard let receiveMsg = String(data: data, encoding: .utf8), let handler = self.socketDidReceiveHandler else {
             return
         }
+        print("receiveMsg", receiveMsg)
         var msgList = receiveMsg.split(separator: "|")
         guard msgList.count >= 4, let itemType = Int(msgList.first!)  else {
             return
