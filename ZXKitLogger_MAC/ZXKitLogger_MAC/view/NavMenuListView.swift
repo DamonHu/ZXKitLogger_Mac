@@ -13,6 +13,7 @@ struct NavMenuListView: View {
     @Binding var isLocal: Bool
 
     @State private var fileList: [URL] = []
+    @State private var remoteList: [String] = []
     @State private var selectedPath: String? {
         willSet {
             if let path = newValue {
@@ -25,8 +26,6 @@ struct NavMenuListView: View {
     }
     @State private var dragOver = false
     @State private var showAlert = false
-    @State private var hostText = ""
-    @State private var portText = ""
 
     var body: some View {
         if isLocal {
@@ -34,7 +33,7 @@ struct NavMenuListView: View {
                 HStack(alignment: .center, spacing: 0) {
                     Button("本地日志") {
                         self.isLocal = true
-                        self.list = []
+                        self.selectedPath = nil
                     }.background(isLocal ? .green : .gray)
                         .foregroundColor(.white)
                         .frame(height: 40)
@@ -52,7 +51,6 @@ struct NavMenuListView: View {
                         .onTapGesture {
                             print("delete")
                             self.selectedPath = nil
-                            self.fileList = []
                         }
                 }
                 VStack(alignment: .trailing, spacing: 10) {
@@ -101,7 +99,7 @@ struct NavMenuListView: View {
                 HStack(alignment: .center, spacing: 0) {
                     Button("本地日志") {
                         self.isLocal = true
-                        self.list = []
+                        self.selectedPath = nil
                     }.background(isLocal ? .green : .gray)
                         .foregroundColor(.white)
                         .frame(height: 40)
@@ -112,31 +110,49 @@ struct NavMenuListView: View {
                         .foregroundColor(.white)
                         .frame(height: 40)
                 }.frame(maxWidth: .infinity, alignment: .center)
-                List {
-                    VStack(alignment: .trailing, spacing: 10) {
-                        HStack(alignment: .center, spacing: 4) {
-                            Text("host")
-                            TextField("127.0.0.1", text: $hostText)
-                                .frame(height: 26)
-                                .border(.gray, width: 0.5)
-                        }
-                        HStack(alignment: .center, spacing: 4) {
-                            Text("port")
-                            TextField("888", text: $portText)
-                                .frame(height: 26)
-                                .border(.gray, width: 0.5)
-                        }
-                        HStack(alignment: .center, spacing: 4) {
-                            Button("连接") {
-                                ZXKitLogger.socketHost = hostText
-                                ZXKitLogger.socketPort = UInt16(portText) ?? 888
-                                ZXKitloggerClientSocket.shared.socketDidReceiveHandler = { item in
+                //                List {
+                //                    VStack(alignment: .trailing, spacing: 10) {
+                //                        HStack(alignment: .center, spacing: 4) {
+                //                            Text("host")
+                //                            TextField("127.0.0.1", text: $hostText)
+                //                                .frame(height: 26)
+                //                                .border(.gray, width: 0.5)
+                //                        }
+                //                        HStack(alignment: .center, spacing: 4) {
+                //                            Text("port")
+                //                            TextField("888", text: $portText)
+                //                                .frame(height: 26)
+                //                                .border(.gray, width: 0.5)
+                //                        }
+                //                        HStack(alignment: .center, spacing: 4) {
+                //                            Button("连接") {
+                //                                ZXKitLogger.socketHost = hostText
+                //                                ZXKitLogger.socketPort = UInt16(portText) ?? 888
+                //                                ZXKitloggerClientSocket.shared.socketDidReceiveHandler = { item in
+                //                                    self.list.insert(item, at: 0)
+                //                                }
+                //                                ZXKitLoggerBonjour.shared.start()
+                //                            }.background(.green)
+                //                                .foregroundColor(.white)
+                //                                .frame(height: 40)
+                //                        }
+                //                    }
+                //                }
+                VStack(alignment: .trailing, spacing: 10) {
+                    List(self.remoteList, id: \.hashValue) { i in
+                        NavRemoteMenuItemView(title: i, selectedPath: $selectedPath)
+                            .onTapGesture {
+                                selectedPath = i
+                            }
+                    }
+                    if self.fileList.isEmpty {
+                        List {
+                            Button("刷新") {
+                                ZXKitLoggerBonjour.shared.socketDidReceiveHandler = { item in
                                     self.list.insert(item, at: 0)
                                 }
-                                ZXKitloggerClientSocket.shared.startSocket()
-                            }.background(.green)
-                                .foregroundColor(.white)
-                                .frame(height: 40)
+                                ZXKitLoggerBonjour.shared.start()
+                            }.frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
                 }

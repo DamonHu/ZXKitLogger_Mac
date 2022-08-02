@@ -1,5 +1,5 @@
 //
-//  ZXKitloggerClientSocket.swift
+//  ZXKitLoggerUDPSocket.swift
 //  ZXKitLogger_MAC
 //
 //  Created by Damon on 2022/8/1.
@@ -10,19 +10,24 @@ import CocoaAsyncSocket
 
 typealias SocketDidReceiveHandler = (_ item: ZXKitLoggerItem) -> ()
 
-class ZXKitloggerClientSocket: NSObject {
-    static let shared = ZXKitloggerClientSocket()
+class ZXKitLoggerUDPSocket: NSObject {
+    static let shared = ZXKitLoggerUDPSocket()
     var socketDidReceiveHandler: SocketDidReceiveHandler?
-    
+
+    private var socketHost: String = "" //UDP的端口
+    private var socketPort: UInt16 = 888 //UDP的端口
+
     private lazy var clientSocket: GCDAsyncUdpSocket = {
         let queue = DispatchQueue.init(label: "zxkitlogger_socket")
         let socket = GCDAsyncUdpSocket(delegate: self, delegateQueue: queue, socketQueue: queue)
         return socket
     }()
 
-    func startSocket() {
+    func start(hostName:String, port: UInt16) {
+        self.socketHost = hostName
+        self.socketPort = port
         do {
-            try clientSocket.bind(toPort: ZXKitLogger.socketPort)
+            try clientSocket.bind(toPort: self.socketPort)
         } catch {
             print("socket.bind error: \(error.localizedDescription)")
         }
@@ -32,12 +37,12 @@ class ZXKitloggerClientSocket: NSObject {
             print("socket.beginReceiving error: \(error.localizedDescription)")
         }
         //发送一条认证信息
-        clientSocket.send("ZXKitLogger_auth".data(using: .utf8)!, toHost:  ZXKitLogger.socketHost, port:  ZXKitLogger.socketPort, withTimeout: 600, tag: 1)
+        clientSocket.send("ZXKitLogger_auth".data(using: .utf8)!, toHost: self.socketHost, port:  self.socketPort, withTimeout: 600, tag: 1)
     }
 
 }
 
-extension ZXKitloggerClientSocket: GCDAsyncUdpSocketDelegate {
+extension ZXKitLoggerUDPSocket: GCDAsyncUdpSocketDelegate {
     func udpSocket(_ sock: GCDAsyncUdpSocket, didConnectToAddress address: Data) {
         print("address")
     }
