@@ -129,11 +129,6 @@ struct NavMenuListView: View {
                     }
                     HStack(alignment: .center, spacing: 4) {
                         Button("连接") {
-                            //                                                    ZXKitLogger.socketHost = domainText
-                            //                                                    ZXKitLogger.socketPort = UInt16(typeText) ?? 888
-                            //                                                    ZXKitloggerClientSocket.shared.socketDidReceiveHandler = { item in
-                            //                                                        self.list.insert(item, at: 0)
-                            //                                                    }
                             ZXKitLogger.socketDomain = domainText
                             ZXKitLogger.socketType = typeText
                             ZXKitLoggerBonjour.shared.socketDidReceiveHandler = { item in
