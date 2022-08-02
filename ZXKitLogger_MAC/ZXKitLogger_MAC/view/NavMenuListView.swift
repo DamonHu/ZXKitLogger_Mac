@@ -11,7 +11,8 @@ struct NavMenuListView: View {
     @Environment(\.openURL) var openURL
     @Binding var list: [ZXKitLoggerItem]
     @Binding var isLocal: Bool
-
+    @State var domainText = ZXKitLogger.socketDomain
+    @State var typeText = ZXKitLogger.socketType
     @State private var fileList: [URL] = []
     @State private var remoteList: [String] = []
     @State private var selectedPath: String? {
@@ -26,7 +27,7 @@ struct NavMenuListView: View {
     }
     @State private var dragOver = false
     @State private var showAlert = false
-
+    
     var body: some View {
         if isLocal {
             VStack(alignment: .center, spacing: 10) {
@@ -76,7 +77,7 @@ struct NavMenuListView: View {
                 }.offset(y: -30)
             }.onDrop(of: ["public.file-url"], isTargeted: $dragOver) { providers in
                 providers.first?.loadDataRepresentation(forTypeIdentifier: "public.file-url", completionHandler: { (data, error) in
-
+                    
                     if let data = data, let path = String(data: data, encoding: String.Encoding.utf8), let url = URL(string: path) {
                         if !url.pathExtension.hasPrefix("db") && !url.pathExtension.hasPrefix("json") {
                             showAlert = true
@@ -86,13 +87,11 @@ struct NavMenuListView: View {
                         if !self.fileList.contains(url) {
                             self.fileList.insert(url, at: 0)
                         }
-
                     }
-
                 })
                 return true
             }.alert("仅支持.db和.json文件", isPresented: $showAlert) {
-
+                
             }
         } else {
             VStack(alignment: .center, spacing: 10) {
@@ -110,35 +109,44 @@ struct NavMenuListView: View {
                         .foregroundColor(.white)
                         .frame(height: 40)
                 }.frame(maxWidth: .infinity, alignment: .center)
-                //                List {
-                //                    VStack(alignment: .trailing, spacing: 10) {
-                //                        HStack(alignment: .center, spacing: 4) {
-                //                            Text("host")
-                //                            TextField("127.0.0.1", text: $hostText)
-                //                                .frame(height: 26)
-                //                                .border(.gray, width: 0.5)
-                //                        }
-                //                        HStack(alignment: .center, spacing: 4) {
-                //                            Text("port")
-                //                            TextField("888", text: $portText)
-                //                                .frame(height: 26)
-                //                                .border(.gray, width: 0.5)
-                //                        }
-                //                        HStack(alignment: .center, spacing: 4) {
-                //                            Button("连接") {
-                //                                ZXKitLogger.socketHost = hostText
-                //                                ZXKitLogger.socketPort = UInt16(portText) ?? 888
-                //                                ZXKitloggerClientSocket.shared.socketDidReceiveHandler = { item in
-                //                                    self.list.insert(item, at: 0)
-                //                                }
-                //                                ZXKitLoggerBonjour.shared.start()
-                //                            }.background(.green)
-                //                                .foregroundColor(.white)
-                //                                .frame(height: 40)
-                //                        }
-                //                    }
-                //                }
                 VStack(alignment: .trailing, spacing: 10) {
+                    HStack(alignment: .center, spacing: 4) {
+                        Text("domain")
+                            .frame(width: 50, alignment: .center)
+                        TextField("local", text: $domainText)
+                            .frame(height: 30)
+                            .border(.gray, width: 0.5)
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                        
+                    }
+                    HStack(alignment: .center, spacing: 4) {
+                        Text("type")
+                            .frame(width: 50, alignment: .center)
+                        TextField("_zxkitlogger", text: $typeText)
+                            .frame(height: 30)
+                            .border(.gray, width: 0.5)
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                    }
+                    HStack(alignment: .center, spacing: 4) {
+                        Button("连接") {
+                            //                                                    ZXKitLogger.socketHost = domainText
+                            //                                                    ZXKitLogger.socketPort = UInt16(typeText) ?? 888
+                            //                                                    ZXKitloggerClientSocket.shared.socketDidReceiveHandler = { item in
+                            //                                                        self.list.insert(item, at: 0)
+                            //                                                    }
+                            ZXKitLogger.socketDomain = domainText
+                            ZXKitLogger.socketType = typeText
+                            ZXKitLoggerBonjour.shared.socketDidReceiveHandler = { item in
+                                print("insert item", item.mLogItemType)
+                                self.list.insert(item, at: 0)
+                                print(self.list)
+                            }
+                            ZXKitLoggerBonjour.shared.start()
+                            ZXKitLoggerBonjour.shared.start()
+                        }.background(.green)
+                            .foregroundColor(.white)
+                            .frame(height: 40)
+                    }
                     List(self.remoteList, id: \.hashValue) { i in
                         NavRemoteMenuItemView(title: i, selectedPath: $selectedPath)
                             .onTapGesture {
@@ -149,7 +157,9 @@ struct NavMenuListView: View {
                         List {
                             Button("刷新") {
                                 ZXKitLoggerBonjour.shared.socketDidReceiveHandler = { item in
+                                    print("insert item", item.mLogItemType)
                                     self.list.insert(item, at: 0)
+                                    print(self.list)
                                 }
                                 ZXKitLoggerBonjour.shared.start()
                             }.frame(maxWidth: .infinity, alignment: .center)

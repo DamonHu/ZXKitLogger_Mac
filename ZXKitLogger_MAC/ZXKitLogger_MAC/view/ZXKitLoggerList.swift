@@ -11,7 +11,7 @@ struct ZXKitLoggerList: View {
     @Binding var list: [ZXKitLoggerItem]
 
     var body: some View {
-        List(list, id: \.id) { item in
+        List(list, id: \.identifier) { item in
             ZXKitLoggerCell(item: item)
         }.offset(y: 30)
     }

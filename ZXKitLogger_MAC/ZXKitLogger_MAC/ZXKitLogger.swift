@@ -51,5 +51,9 @@ public class ZXKitLogger {
     public static var privacyLogPassword = "12345678901234561234567890123456"
     public static var privacyLogIv = "abcdefghijklmnop"
     public static var privacyResultEncodeType = ZXKitUtilEncodeType.hex
+    
+    /**实时日志功能**/
     public static var isTCP: Bool = true //是否TCP链接，UDP支持一对多，但是APP需要申请权限
+    public static var socketDomain: String = "local" //支持自定义
+    public static var socketType: String = "_zxkitlogger"//支持自定义
 }

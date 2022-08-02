@@ -26,7 +26,8 @@ extension ZXKitLoggerBonjour {
     func start() {
         mBrowser.stop()
         mBrowser.schedule(in: RunLoop.current, forMode: .common)
-        mBrowser.searchForServices(ofType: "_zxkitlogger._tcp", inDomain: "local.")
+        let type = ZXKitLogger.isTCP ? "_tcp" : "_udp"
+        mBrowser.searchForServices(ofType: "\(ZXKitLogger.socketType).\(type)", inDomain: "\(ZXKitLogger.socketDomain).")
     }
 
     func stop() {

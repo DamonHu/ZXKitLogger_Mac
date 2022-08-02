@@ -15,7 +15,9 @@ enum Section: CaseIterable {
 }
 ///log的内容
 public class ZXKitLoggerItem {
+    let identifier = UUID()                                 //用于hash计算
     var id: Int = 0
+    
     var mLogItemType = ZXKitLogType.info             //log类型
     var mLogDebugContent: String = ""              //log输出的文件、行数、函数名
     private(set) var mLogContent: String = ""          //log的内容
