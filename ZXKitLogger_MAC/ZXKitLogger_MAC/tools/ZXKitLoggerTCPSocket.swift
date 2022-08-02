@@ -43,6 +43,7 @@ extension ZXKitLoggerTCPSocket {
                 return
             }
             self.serverSocket.write(data, withTimeout: 20, tag: 0)
+            self.serverSocket.readData(withTimeout: -1, tag: 0)
         }
     }
 
