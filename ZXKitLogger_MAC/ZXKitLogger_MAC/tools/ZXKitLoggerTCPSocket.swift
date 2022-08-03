@@ -12,40 +12,45 @@ import CocoaAsyncSocket
 class ZXKitLoggerTCPSocket: NSObject {
     public static let shared = ZXKitLoggerTCPSocket()
     var socketDidReceiveHandler: SocketDidReceiveHandler?
+    var socketDidConnectHandler: SocketDidConnectHandler?
     private var timer: Timer?
 
     
-    private lazy var serverSocket: GCDAsyncSocket = {
-        let queue = DispatchQueue.init(label: "zxkitlogger_socket")
-        let socket = GCDAsyncSocket(delegate: self, delegateQueue: queue, socketQueue: queue)
-        socket.isIPv4PreferredOverIPv6 = false
-        return socket
-    }()
+//    private lazy var serverSocket: GCDAsyncSocket = {
+//        let queue = DispatchQueue.init(label: "zxkitlogger_socket")
+//        let socket = GCDAsyncSocket(delegate: self, delegateQueue: queue, socketQueue: queue)
+//        socket.isIPv4PreferredOverIPv6 = false
+//        return socket
+//    }()
     
-    private var socketList: [GCDAsyncSocket] = []
+    private var acceptSocketList: [GCDAsyncSocket] = []
+    private var connectSocketList: [GCDAsyncSocket] = []
 }
 
 extension ZXKitLoggerTCPSocket {
     func start(hostName:String, port: UInt16) {
-        self.serverSocket.disconnect()
+        let queue = DispatchQueue.init(label: "zxkitlogger_socket")
+        let socket = GCDAsyncSocket(delegate: self, delegateQueue: queue, socketQueue: queue)
+        socket.isIPv4PreferredOverIPv6 = false
         do {
-            try self.serverSocket.connect(toHost: hostName, onPort: port, withTimeout: 20)
+            try socket.connect(toHost: hostName, onPort: port, withTimeout: 20)
         } catch {
             print("connect error", error)
         }
-        self.sendHeartBeat()
+        connectSocketList.append(socket)
+        self.sendHeartBeat(socket: socket)
     }
 
-    func sendHeartBeat() {
+    func sendHeartBeat(socket: GCDAsyncSocket) {
         print("heart beat")
         timer?.invalidate()
         //发送心跳包
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
-            guard let self = self, let data = "h".data(using: .utf8) else {
+            guard let data = "h".data(using: .utf8) else {
                 return
             }
-            self.serverSocket.write(data, withTimeout: 20, tag: 0)
-            self.serverSocket.readData(withTimeout: -1, tag: 0)
+            socket.write(data, withTimeout: 20, tag: 0)
+            socket.readData(withTimeout: -1, tag: 0)
         }
     }
 
@@ -54,14 +59,15 @@ extension ZXKitLoggerTCPSocket {
 extension ZXKitLoggerTCPSocket: GCDAsyncSocketDelegate {
     func socket(_ sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {
         print("didAcceptNewSocket")
-        
-        newSocket.delegate = self
-        socketList.append(newSocket)
+        acceptSocketList.append(newSocket)
         newSocket.readData(withTimeout: -1, tag: 0)
     }
     
     func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16) {
         print("didConnectToHost", host, port)
+        if let socketDidConnectHandler = socketDidConnectHandler {
+            socketDidConnectHandler(host, port)
+        }
     }
 
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
@@ -89,7 +95,10 @@ extension ZXKitLoggerTCPSocket: GCDAsyncSocketDelegate {
         item.mCreateDate = Date(timeIntervalSince1970: TimeInterval(msgList[2]) ?? 0)
         msgList.removeFirst(3)
         item.updateLogContent(type: item.mLogItemType, content: msgList.joined(separator: "|"))
-        handler(item)
+        print("sock.connectedHost, sock.connectedPort")
+        if let host = sock.connectedHost {
+            handler(host, sock.connectedPort, item)
+        }
 
         sock.readData(withTimeout: -1, tag: tag)
     }

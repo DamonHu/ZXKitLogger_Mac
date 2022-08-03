@@ -8,7 +8,8 @@
 import Foundation
 import CocoaAsyncSocket
 
-typealias SocketDidReceiveHandler = (_ item: ZXKitLoggerItem) -> ()
+typealias SocketDidConnectHandler = (_ host: String, _ port: UInt16) -> ()
+typealias SocketDidReceiveHandler = (_ host: String, _ port: UInt16, _ item: ZXKitLoggerItem) -> ()
 
 class ZXKitLoggerUDPSocket: NSObject {
     static let shared = ZXKitLoggerUDPSocket()
@@ -73,6 +74,6 @@ extension ZXKitLoggerUDPSocket: GCDAsyncUdpSocketDelegate {
         item.mCreateDate = Date(timeIntervalSince1970: TimeInterval(msgList[2]) ?? 0)
         msgList.removeFirst(3)
         item.updateLogContent(type: item.mLogItemType, content: msgList.joined(separator: "|"))
-        handler(item)
+        handler(self.socketHost, self.socketPort, item)
     }
 }

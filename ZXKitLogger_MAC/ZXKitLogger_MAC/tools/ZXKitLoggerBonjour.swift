@@ -8,9 +8,12 @@
 import Foundation
 import Network
 
+typealias BonjourDidConnectHandler = (_ name: String, _ host: String, _ port: UInt16) -> ()
+
 class ZXKitLoggerBonjour: NSObject {
     static let shared = ZXKitLoggerBonjour()
     var socketDidReceiveHandler: SocketDidReceiveHandler?
+    var bonjourDidConnectHandler: BonjourDidConnectHandler?
 
     private lazy var mBrowser: NetServiceBrowser = {
         let browser = NetServiceBrowser()
@@ -68,6 +71,11 @@ extension ZXKitLoggerBonjour: NetServiceDelegate {
         if let hostName = sender.hostName {
             if ZXKitLogger.isTCP {
                 ZXKitLoggerTCPSocket.shared.socketDidReceiveHandler = self.socketDidReceiveHandler
+                ZXKitLoggerTCPSocket.shared.socketDidConnectHandler = { host, port in
+                    if let bonjourDidConnectHandler = self.bonjourDidConnectHandler {
+                        bonjourDidConnectHandler(sender.name, host, port)
+                    }
+                }
                 ZXKitLoggerTCPSocket.shared.start(hostName: hostName, port: UInt16(sender.port))
             } else {
                 ZXKitLoggerUDPSocket.shared.socketDidReceiveHandler = self.socketDidReceiveHandler
