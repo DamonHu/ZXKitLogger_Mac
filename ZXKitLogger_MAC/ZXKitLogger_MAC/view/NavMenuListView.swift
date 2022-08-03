@@ -27,6 +27,7 @@ struct NavMenuListView: View {
         willSet {
             if let path = newValue {
                 if isLocal {
+                    print(path)
                     let tool = SQLiteTool(path: URL.init(fileURLWithPath: path))
                     list = tool.getAllLog()
                 } else {
@@ -92,7 +93,6 @@ struct NavMenuListView: View {
                 }.offset(y: -30)
             }.onDrop(of: ["public.file-url"], isTargeted: $dragOver) { providers in
                 providers.first?.loadDataRepresentation(forTypeIdentifier: "public.file-url", completionHandler: { (data, error) in
-                    
                     if let data = data, let path = String(data: data, encoding: String.Encoding.utf8), let url = URL(string: path) {
                         if !url.pathExtension.hasPrefix("db") && !url.pathExtension.hasPrefix("json") {
                             showAlert = true

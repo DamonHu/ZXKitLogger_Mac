@@ -6,5 +6,5 @@ target 'ZXKitLogger_MAC' do
   use_frameworks!
 
   # Pods for ZXKitLogger_MAC
-  pod 'CocoaAsyncSocket'  
+  pod 'CocoaAsyncSocket'
 end

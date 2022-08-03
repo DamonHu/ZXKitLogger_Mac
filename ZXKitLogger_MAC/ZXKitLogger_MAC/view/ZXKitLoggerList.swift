@@ -13,7 +13,7 @@ struct ZXKitLoggerList: View {
     var body: some View {
         List(list, id: \.identifier) { item in
             ZXKitLoggerCell(item: item)
-        }.offset(y: 30)
+        }.padding(EdgeInsets(top: 30, leading: 0, bottom: 30, trailing: 0))
     }
 }
 
