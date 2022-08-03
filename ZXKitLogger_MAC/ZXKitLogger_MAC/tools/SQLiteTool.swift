@@ -66,17 +66,29 @@ class SQLiteTool {
 }
 
 private extension SQLiteTool {
+    func changeFileRight() {
+        
+        
+        
+    }
     //打开数据库
     func _openDatabase() -> OpaquePointer? {
-        var db: OpaquePointer?
         let dbPath = self.logDBPath
-        if sqlite3_open_v2(dbPath.path, &db, SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE|SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK {
-//            print("成功打开数据库\(dbPath.absoluteString)")
-            return db
+        if FileManager.default.isReadableFile(atPath: dbPath.path) {
+            var db: OpaquePointer?
+            if sqlite3_open_v2(dbPath.path, &db, SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE|SQLITE_OPEN_FULLMUTEX, nil) == SQLITE_OK {
+    //            print("成功打开数据库\(dbPath.absoluteString)")
+                return db
+            } else {
+                print("打开数据库失败")
+                return nil
+            }
         } else {
-            print("打开数据库失败")
+            print("没有读取权限")
+            
             return nil
         }
+        
     }
 }
 

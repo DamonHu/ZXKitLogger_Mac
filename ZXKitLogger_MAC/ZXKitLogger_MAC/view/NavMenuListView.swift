@@ -15,9 +15,9 @@ struct NavMenuListView: View {
     @State private var typeText = ZXKitLogger.socketType
     @State private var fileList: [URL] = [] {
         willSet {
-            let pathList = newValue.map { url in
-                return url.path
-            }
+            let pathList = newValue.compactMap({ url in
+                try? url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
+            })
             UserDefaults.standard.set(pathList, forKey: "zxkitlogger_mac_file_path_list")
         }
     }
@@ -108,10 +108,15 @@ struct NavMenuListView: View {
             }.alert("仅支持.db和.json文件", isPresented: $showAlert) {
                 
             }.onAppear {
-                if let pathList = UserDefaults.standard.object(forKey: "zxkitlogger_mac_file_path_list") as? [String] {
-                    self.fileList = pathList.map { path in
-                        return URL(fileURLWithPath: path)
-                    }
+                if let pathBookDataList = UserDefaults.standard.object(forKey: "zxkitlogger_mac_file_path_list") as? [Data] {
+                    self.fileList = pathBookDataList.compactMap({ data in
+                        var isStale = false
+                        let url = try? URL(resolvingBookmarkData: data, options: [.withSecurityScope, .withoutUI], relativeTo: nil, bookmarkDataIsStale: &isStale)
+                        if !isStale, url?.startAccessingSecurityScopedResource() == true {
+                            return url
+                        }
+                        return nil
+                    })
                 }
             }
         } else {
