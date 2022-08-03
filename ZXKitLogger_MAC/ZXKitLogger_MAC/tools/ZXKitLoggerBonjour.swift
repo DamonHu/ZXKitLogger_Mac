@@ -22,7 +22,8 @@ class ZXKitLoggerBonjour: NSObject {
     }()
 
     //解析的service
-    private var mResolveService: NetService?
+    private var mResolveServiceList: [NetService] = []
+    private var mZXKitLoggerTCPSocketManager: [ZXKitLoggerTCPSocketManager] = []
 }
 
 extension ZXKitLoggerBonjour {
@@ -40,10 +41,10 @@ extension ZXKitLoggerBonjour {
 
 extension ZXKitLoggerBonjour: NetServiceBrowserDelegate {
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
-        print("didFind service")
+        print("didFind service: domainName= \(service.domain), type= \(service.type), name= \(service.name), onPort= \(service.port) and hostname: \(service.hostName)");
         //解析发现的service
-        self.mResolveService = service
-        self.mResolveService?.delegate = self
+        self.mResolveServiceList.append(service)
+        service.delegate = self
         service.resolve(withTimeout: 10)
     }
 
@@ -64,22 +65,25 @@ extension ZXKitLoggerBonjour: NetServiceDelegate {
     func netServiceDidResolveAddress(_ sender: NetService) {
         print("Connecting with service: domainName= \(sender.domain), type= \(sender.type), name= \(sender.name), onPort= \(sender.port) and hostname: \(sender.hostName!)");
 
-        let data = sender.txtRecordData()
-        let dict = NetService.dictionary(fromTXTRecord: data!)
-        let info = String.init(data: dict["node"]!, encoding: String.Encoding.utf8)
-        print("mac info = ",info);
+//        let data = sender.txtRecordData()
+//        let dict = NetService.dictionary(fromTXTRecord: data!)
+//        let info = String.init(data: dict["node"]!, encoding: String.Encoding.utf8)
+//        print("mac info = ",info);
         if let hostName = sender.hostName {
             if ZXKitLogger.isTCP {
-                ZXKitLoggerTCPSocket.shared.socketDidReceiveHandler = self.socketDidReceiveHandler
-                ZXKitLoggerTCPSocket.shared.socketDidConnectHandler = { host, port in
+                let tcpManager = ZXKitLoggerTCPSocketManager()
+                tcpManager.socketDidReceiveHandler = self.socketDidReceiveHandler
+                tcpManager.socketDidConnectHandler = { host, port in
                     if let bonjourDidConnectHandler = self.bonjourDidConnectHandler {
                         bonjourDidConnectHandler(sender.name, host, port)
                     }
                 }
-                ZXKitLoggerTCPSocket.shared.start(hostName: hostName, port: UInt16(sender.port))
+                tcpManager.start(hostName: hostName, port: UInt16(sender.port))
+                self.mZXKitLoggerTCPSocketManager.append(tcpManager)
             } else {
-                ZXKitLoggerUDPSocket.shared.socketDidReceiveHandler = self.socketDidReceiveHandler
-                ZXKitLoggerUDPSocket.shared.start(hostName: hostName, port: UInt16(sender.port))
+                //TODO: 移除UDP广播
+//                ZXKitLoggerUDPSocketManager.shared.socketDidReceiveHandler = self.socketDidReceiveHandler
+//                ZXKitLoggerUDPSocketManager.shared.start(hostName: hostName, port: UInt16(sender.port))
             }
 
         }

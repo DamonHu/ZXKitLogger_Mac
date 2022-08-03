@@ -1,5 +1,5 @@
 //
-//  ZXKitLoggerUDPSocket.swift
+//  ZXKitLoggerUDPSocketManager.swift
 //  ZXKitLogger_MAC
 //
 //  Created by Damon on 2022/8/1.
@@ -11,8 +11,8 @@ import CocoaAsyncSocket
 typealias SocketDidConnectHandler = (_ host: String, _ port: UInt16) -> ()
 typealias SocketDidReceiveHandler = (_ host: String, _ port: UInt16, _ item: ZXKitLoggerItem) -> ()
 
-class ZXKitLoggerUDPSocket: NSObject {
-    static let shared = ZXKitLoggerUDPSocket()
+class ZXKitLoggerUDPSocketManager: NSObject {
+    static let shared = ZXKitLoggerUDPSocketManager()
     var socketDidReceiveHandler: SocketDidReceiveHandler?
 
     private var socketHost: String = "" //UDP的端口
@@ -43,7 +43,7 @@ class ZXKitLoggerUDPSocket: NSObject {
 
 }
 
-extension ZXKitLoggerUDPSocket: GCDAsyncUdpSocketDelegate {
+extension ZXKitLoggerUDPSocketManager: GCDAsyncUdpSocketDelegate {
     func udpSocket(_ sock: GCDAsyncUdpSocket, didConnectToAddress address: Data) {
         print("address")
     }
