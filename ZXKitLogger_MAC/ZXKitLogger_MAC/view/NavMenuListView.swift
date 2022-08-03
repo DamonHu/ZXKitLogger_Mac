@@ -9,12 +9,18 @@ import SwiftUI
 
 struct NavMenuListView: View {
     @Environment(\.openURL) var openURL
-
     @Binding var list: [ZXKitLoggerItem]    //显示在列表的log
     @Binding var isLocal: Bool
     @State private var domainText = ZXKitLogger.socketDomain
     @State private var typeText = ZXKitLogger.socketType
-    @State private var fileList: [URL] = []
+    @State private var fileList: [URL] = [] {
+        willSet {
+            let pathList = newValue.map { url in
+                return url.path
+            }
+            UserDefaults.standard.set(pathList, forKey: "zxkitlogger_mac_file_path_list")
+        }
+    }
     @State private var remoteList: [String] = []
     @State private  var remoteLogList: [String: [ZXKitLoggerItem]] = [:]    //远程接受到的所有log
     @State private var selectedPath: String? {
@@ -24,7 +30,6 @@ struct NavMenuListView: View {
                     let tool = SQLiteTool(path: URL.init(fileURLWithPath: path))
                     list = tool.getAllLog()
                 } else {
-                    print(remoteLogList[path]?.count)
                     list = remoteLogList[path] ?? []
                 }
             } else {
@@ -60,6 +65,7 @@ struct NavMenuListView: View {
                         .frame(width: 20, height: 20, alignment: .center)
                         .onTapGesture {
                             print("delete")
+                            self.fileList = []
                             self.selectedPath = nil
                         }
                 }
@@ -101,6 +107,12 @@ struct NavMenuListView: View {
                 return true
             }.alert("仅支持.db和.json文件", isPresented: $showAlert) {
                 
+            }.onAppear {
+                if let pathList = UserDefaults.standard.object(forKey: "zxkitlogger_mac_file_path_list") as? [String] {
+                    self.fileList = pathList.map { path in
+                        return URL(fileURLWithPath: path)
+                    }
+                }
             }
         } else {
             VStack(alignment: .center, spacing: 10) {
@@ -206,8 +218,6 @@ private extension NavMenuListView {
                 if selectedPath.contains("\(host): \(port)") {
                     self.list.insert(item, at: 0)
                 }
-
-                print(remoteLogList[selectedPath]?.count)
             }
         }
         ZXKitLoggerBonjour.shared.start()
