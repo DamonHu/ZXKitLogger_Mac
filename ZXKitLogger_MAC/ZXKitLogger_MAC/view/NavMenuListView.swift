@@ -84,7 +84,7 @@ struct NavMenuListView: View {
                         }
                     }
                 }
-                Image("82921884")
+                Image("icon_login_cicada")
                     .resizable()
                     .frame(width: 50, height: 50, alignment: .center)
                     .offset(y: -40)
@@ -136,8 +136,9 @@ struct NavMenuListView: View {
                             Text("domain")
                                 .frame(width: 50, alignment: .center)
                             TextField("local", text: $domainText)
-                                .frame(height: 30)
+                                .frame(height: 24)
                                 .border(.gray, width: 0.5)
+                                .textFieldStyle(.plain)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
 
                         }
@@ -145,8 +146,9 @@ struct NavMenuListView: View {
                             Text("type")
                                 .frame(width: 50, alignment: .center)
                             TextField("_zxkitlogger", text: $typeText)
-                                .frame(height: 30)
+                                .frame(height: 24)
                                 .border(.gray, width: 0.5)
+                                .textFieldStyle(.plain)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
                         }
                     }
@@ -161,6 +163,11 @@ struct NavMenuListView: View {
                             }.foregroundColor(.white)
                                 .background(.green)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                                .frame(height: 40)
+                            Button("取消") {
+                                isEditConfig = false
+                            }.foregroundColor(.white)
+                                .background(.gray)
                                 .frame(height: 40)
                         } else {
                             Button("修改socket参数") {
@@ -185,7 +192,7 @@ struct NavMenuListView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                         .offset(y: -40)
                 } else {
-                    Image("82921884")
+                    Image("icon_login_cicada")
                         .resizable()
                         .frame(width: 50, height: 50, alignment: .center)
                         .offset(y: -40)
