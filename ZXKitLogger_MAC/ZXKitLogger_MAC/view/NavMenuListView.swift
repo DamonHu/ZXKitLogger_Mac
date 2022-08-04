@@ -11,14 +11,14 @@ struct NavMenuListView: View {
     @Environment(\.openURL) var openURL
     @Binding var list: [ZXKitLoggerItem]    //显示在列表的log
     @Binding var isLocal: Bool
-    @State private var domainText = ZXKitLogger.socketDomain
-    @State private var typeText = ZXKitLogger.socketType
+    @State private var domainText = UserDefaults.standard.string(forKey: UserDefaultsKey.domain.rawValue) ?? ZXKitLogger.socketDomain
+    @State private var typeText =  UserDefaults.standard.string(forKey: UserDefaultsKey.socketType.rawValue) ?? ZXKitLogger.socketType
     @State private var fileList: [URL] = [] {
         willSet {
             let pathList = newValue.compactMap({ url in
                 try? url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
             })
-            UserDefaults.standard.set(pathList, forKey: "zxkitlogger_mac_file_path_list")
+            UserDefaults.standard.set(pathList, forKey: UserDefaultsKey.fileListHistory.rawValue)
         }
     }
     @State private var remoteList: [String] = []
@@ -108,7 +108,7 @@ struct NavMenuListView: View {
             }.alert("仅支持.db和.json文件", isPresented: $showAlert) {
                 
             }.onAppear {
-                if let pathBookDataList = UserDefaults.standard.object(forKey: "zxkitlogger_mac_file_path_list") as? [Data] {
+                if let pathBookDataList = UserDefaults.standard.object(forKey: UserDefaultsKey.fileListHistory.rawValue) as? [Data] {
                     self.fileList = pathBookDataList.compactMap({ data in
                         var isStale = false
                         let url = try? URL(resolvingBookmarkData: data, options: [.withSecurityScope, .withoutUI], relativeTo: nil, bookmarkDataIsStale: &isStale)
@@ -163,7 +163,8 @@ struct NavMenuListView: View {
                                 isEditConfig = false
                                 ZXKitLogger.socketDomain = domainText
                                 ZXKitLogger.socketType = typeText
-
+                                UserDefaults.standard.set(domainText, forKey: UserDefaultsKey.domain.rawValue)
+                                UserDefaults.standard.set(typeText, forKey: UserDefaultsKey.socketType.rawValue)
                                 self._startSocketConnect()
                             }.foregroundColor(.white)
                                 .background(.green)
@@ -180,6 +181,8 @@ struct NavMenuListView: View {
                             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
                                 .frame(height: 40)
                             Button("刷新") {
+                                ZXKitLogger.socketDomain = domainText
+                                ZXKitLogger.socketType = typeText
                                 self._startSocketConnect()
                             }.frame(height: 40)
                         }
