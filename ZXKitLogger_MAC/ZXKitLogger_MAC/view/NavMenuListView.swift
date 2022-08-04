@@ -44,24 +44,31 @@ struct NavMenuListView: View {
     @State private var isConnecting = false  //是否在连接远程服务器
     
     var body: some View {
-        if isLocal {
-            VStack(alignment: .center, spacing: 10) {
-                HStack(alignment: .center, spacing: 0) {
-                    Button("本地日志") {
-                        self.isLocal = true
-                        self.selectedPath = nil
-                    }.background(isLocal ? .green : .gray)
-                        .foregroundColor(.white)
-                        .frame(height: 40)
-                    Button("远程日志") {
-                        self.selectedPath = nil
-                        self.isLocal = false
-                    }.background(isLocal ? .gray : .green)
-                        .foregroundColor(.white)
-                        .frame(height: 40)
-                }.frame(maxWidth: .infinity, alignment: .center)
-                if !self.fileList.isEmpty {
-                    Image("delete")
+        VStack(alignment: .center, spacing: 10) {
+            HStack(alignment: .center, spacing: 0) {
+                Button("本地日志") {
+                    self.isConnecting = false
+                    self.isLocal = true
+                    self.selectedPath = nil
+                }.background(isLocal ? .green : .gray)
+                    .foregroundColor(.white)
+                    .frame(height: 40)
+                Button("远程日志") {
+                    self.selectedPath = nil
+                    self.isLocal = false
+                }.background(isLocal ? .gray : .green)
+                    .foregroundColor(.white)
+                    .frame(height: 40)
+                Image("icon_setting")
+                    .resizable()
+                    .frame(width: 20, height: 20, alignment: .center)
+                    .onTapGesture {
+                        //设置
+                        print("点击设置")
+                        isEditConfig = true
+                    }.padding()
+                if self.isLocal {
+                    Image("icon_delete")
                         .resizable()
                         .frame(width: 20, height: 20, alignment: .center)
                         .onTapGesture {
@@ -69,7 +76,71 @@ struct NavMenuListView: View {
                             self.fileList = []
                             self.selectedPath = nil
                         }
+                } else {
+                    Image("icon_refresh")
+                        .resizable()
+                        .frame(width: 20, height: 20, alignment: .center)
+                        .onTapGesture {
+                            print("刷新")
+                            ZXKitLogger.socketDomain = domainText
+                            ZXKitLogger.socketType = typeText
+                            self._startSocketConnect()
+                        }
                 }
+            }.frame(maxWidth: .infinity, alignment: .center)
+            //中间内容布局
+            if isEditConfig {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(alignment: .center, spacing: 10) {
+                        Text("")
+                            .padding()
+                            .frame(width: 5, height: 16, alignment: .center)
+                            .background(.red)
+                            .cornerRadius(6)
+                        Text("远程日志配置")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }.padding(.leading, 10)
+                    HStack(alignment: .center, spacing: 4) {
+                        Text("domain")
+                            .frame(width: 50, alignment: .center)
+                        TextField("local", text: $domainText)
+                            .frame(height: 24)
+                            .border(.gray, width: 0.5)
+                            .textFieldStyle(.plain)
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+
+                    }.padding(.leading, 10)
+                    HStack(alignment: .center, spacing: 4) {
+                        Text("type")
+                            .frame(width: 50, alignment: .center)
+                        TextField("_zxkitlogger", text: $typeText)
+                            .frame(height: 24)
+                            .border(.gray, width: 0.5)
+                            .textFieldStyle(.plain)
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                    }.padding(.leading, 10)
+                    //确定
+                    HStack(alignment: .center, spacing: 4) {
+                        Button("确定") {
+                            isEditConfig = false
+                            ZXKitLogger.socketDomain = domainText
+                            ZXKitLogger.socketType = typeText
+                            UserDefaults.standard.set(domainText, forKey: UserDefaultsKey.domain.rawValue)
+                            UserDefaults.standard.set(typeText, forKey: UserDefaultsKey.socketType.rawValue)
+                            self._startSocketConnect()
+                        }.foregroundColor(.white)
+                            .background(.green)
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                            .frame(height: 40)
+                        Button("取消") {
+                            isEditConfig = false
+                        }.foregroundColor(.white)
+                            .background(.gray)
+                            .frame(height: 40)
+                    }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            } else if isLocal {
+                //本地日志
                 VStack(alignment: .trailing, spacing: 10) {
                     List(self.fileList, id: \.path) { i in
                         NavMenuItemView(url: i, selectedPath: $selectedPath)
@@ -83,110 +154,37 @@ struct NavMenuListView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
-                }
-                Image("icon_login_cicada")
-                    .resizable()
-                    .frame(width: 50, height: 50, alignment: .center)
-                    .offset(y: -40)
-                Button("GitHub") {
-                    openURL(URL(string: "https://github.com/DamonHu/ZXKitLogger_Mac")!)
-                }.offset(y: -30)
-            }.onDrop(of: ["public.file-url"], isTargeted: $dragOver) { providers in
-                providers.first?.loadDataRepresentation(forTypeIdentifier: "public.file-url", completionHandler: { (data, error) in
-                    if let data = data, let path = String(data: data, encoding: String.Encoding.utf8), let url = URL(string: path) {
-                        if !url.pathExtension.hasPrefix("db") && !url.pathExtension.hasPrefix("json") {
-                            showAlert = true
-                            return
+                }.onDrop(of: ["public.file-url"], isTargeted: $dragOver) { providers in
+                    providers.first?.loadDataRepresentation(forTypeIdentifier: "public.file-url", completionHandler: { (data, error) in
+                        if let data = data, let path = String(data: data, encoding: String.Encoding.utf8), let url = URL(string: path) {
+                            if !url.pathExtension.hasPrefix("db") && !url.pathExtension.hasPrefix("json") {
+                                showAlert = true
+                                return
+                            }
+                            selectedPath = url.path
+                            if !self.fileList.contains(url) {
+                                self.fileList.insert(url, at: 0)
+                            }
                         }
-                        selectedPath = url.path
-                        if !self.fileList.contains(url) {
-                            self.fileList.insert(url, at: 0)
-                        }
-                    }
-                })
-                return true
-            }.alert("仅支持.db和.json文件", isPresented: $showAlert) {
-                
-            }.onAppear {
-                if let pathBookDataList = UserDefaults.standard.object(forKey: UserDefaultsKey.fileListHistory.rawValue) as? [Data] {
-                    self.fileList = pathBookDataList.compactMap({ data in
-                        var isStale = false
-                        let url = try? URL(resolvingBookmarkData: data, options: [.withSecurityScope, .withoutUI], relativeTo: nil, bookmarkDataIsStale: &isStale)
-                        if !isStale, url?.startAccessingSecurityScopedResource() == true {
-                            return url
-                        }
-                        return nil
                     })
-                }
-            }
-        } else {
-            VStack(alignment: .center, spacing: 10) {
-                HStack(alignment: .center, spacing: 0) {
-                    Button("本地日志") {
-                        self.isLocal = true
-                        self.selectedPath = nil
-                    }.background(isLocal ? .green : .gray)
-                        .foregroundColor(.white)
-                        .frame(height: 40)
-                    Button("远程日志") {
-                        self.isLocal = false
-                        self.selectedPath = nil
-                    }.background(isLocal ? .gray : .green)
-                        .foregroundColor(.white)
-                        .frame(height: 40)
-                }.frame(maxWidth: .infinity, alignment: .center)
-                VStack(alignment: .trailing, spacing: 10) {
-                    if isEditConfig {
-                        HStack(alignment: .center, spacing: 4) {
-                            Text("domain")
-                                .frame(width: 50, alignment: .center)
-                            TextField("local", text: $domainText)
-                                .frame(height: 24)
-                                .border(.gray, width: 0.5)
-                                .textFieldStyle(.plain)
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                    return true
+                }.alert("仅支持.db和.json文件", isPresented: $showAlert) {
 
-                        }
-                        HStack(alignment: .center, spacing: 4) {
-                            Text("type")
-                                .frame(width: 50, alignment: .center)
-                            TextField("_zxkitlogger", text: $typeText)
-                                .frame(height: 24)
-                                .border(.gray, width: 0.5)
-                                .textFieldStyle(.plain)
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                        }
+                }.onAppear {
+                    if let pathBookDataList = UserDefaults.standard.object(forKey: UserDefaultsKey.fileListHistory.rawValue) as? [Data] {
+                        self.fileList = pathBookDataList.compactMap({ data in
+                            var isStale = false
+                            let url = try? URL(resolvingBookmarkData: data, options: [.withSecurityScope, .withoutUI], relativeTo: nil, bookmarkDataIsStale: &isStale)
+                            if !isStale, url?.startAccessingSecurityScopedResource() == true {
+                                return url
+                            }
+                            return nil
+                        })
                     }
-                    HStack(alignment: .center, spacing: 4) {
-                        if isEditConfig {
-                            Button("确定") {
-                                isEditConfig = false
-                                ZXKitLogger.socketDomain = domainText
-                                ZXKitLogger.socketType = typeText
-                                UserDefaults.standard.set(domainText, forKey: UserDefaultsKey.domain.rawValue)
-                                UserDefaults.standard.set(typeText, forKey: UserDefaultsKey.socketType.rawValue)
-                                self._startSocketConnect()
-                            }.foregroundColor(.white)
-                                .background(.green)
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                                .frame(height: 40)
-                            Button("取消") {
-                                isEditConfig = false
-                            }.foregroundColor(.white)
-                                .background(.gray)
-                                .frame(height: 40)
-                        } else {
-                            Button("修改socket参数") {
-                                isEditConfig = true
-                            }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                                .frame(height: 40)
-                            Button("刷新") {
-                                ZXKitLogger.socketDomain = domainText
-                                ZXKitLogger.socketType = typeText
-                                self._startSocketConnect()
-                            }.frame(height: 40)
-                        }
-                    }.frame(maxWidth: .infinity)
+                }
+            } else {
+                //远程模式
+                VStack(alignment: .trailing, spacing: 10) {
                     //服务器列表
                     List(self.remoteList, id: \.hashValue) { i in
                         NavRemoteMenuItemView(title: i, selectedPath: $selectedPath)
@@ -195,20 +193,21 @@ struct NavMenuListView: View {
                             }
                     }
                 }
-                if isConnecting {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .offset(y: -40)
-                } else {
-                    Image("icon_login_cicada")
-                        .resizable()
-                        .frame(width: 50, height: 50, alignment: .center)
-                        .offset(y: -40)
-                }
-                Button("GitHub") {
-                    openURL(URL(string: "https://github.com/DamonHu/ZXKitLogger_Mac")!)
-                }.offset(y: -30)
             }
+            //底部
+            if isConnecting {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    .offset(y: -40)
+            } else {
+                Image("icon_login_cicada")
+                    .resizable()
+                    .frame(width: 50, height: 50, alignment: .center)
+                    .offset(y: -40)
+            }
+            Button("GitHub") {
+                openURL(URL(string: "https://github.com/DamonHu/ZXKitLogger_Mac")!)
+            }.offset(y: -30)
         }
     }
 }
