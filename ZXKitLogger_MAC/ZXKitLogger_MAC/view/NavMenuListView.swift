@@ -6,6 +6,10 @@
 //
 
 import SwiftUI
+import CommonCrypto
+#if canImport(CryptoKit)
+import CryptoKit
+#endif
 
 struct NavMenuListView: View {
     @Environment(\.openURL) var openURL
@@ -47,6 +51,7 @@ struct NavMenuListView: View {
     @State private var showAlert = false
     @State private var isEditConfig = false  //是否编辑修改
     @State private var isConnecting = false  //是否在连接远程服务器
+    @State private var isPrivacyError = false
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -70,7 +75,7 @@ struct NavMenuListView: View {
                     .onTapGesture {
                         //设置
                         print("点击设置")
-                        isEditConfig = true
+                        isEditConfig = !isEditConfig
                     }.padding()
                 if self.isLocal {
                     Image("icon_delete")
@@ -127,7 +132,7 @@ struct NavMenuListView: View {
                         Text("Encode")
                             .frame(width: 70, alignment: .center)
                         HStack(alignment: .center, spacing: 0) {
-                            Button("HEX") {
+                            Button("hex") {
                                 self.isEncodeBase64 = false
                             }.background(isEncodeBase64 ? .gray : .green)
                                 .foregroundColor(.white)
@@ -169,6 +174,10 @@ struct NavMenuListView: View {
                     //确定
                     HStack(alignment: .center, spacing: 4) {
                         Button("确定") {
+                            if privacyLogIv.count != kCCKeySizeAES128 || (privacyLogPassword.count != kCCKeySizeAES128 && privacyLogPassword.count != kCCKeySizeAES192 && privacyLogPassword.count != kCCKeySizeAES256) {
+                                isPrivacyError = true
+                                return
+                            }
                             isEditConfig = false
                             ZXKitLogger.socketDomain = domainText
                             ZXKitLogger.socketType = typeText
@@ -181,11 +190,16 @@ struct NavMenuListView: View {
                             UserDefaults.standard.set(privacyLogPassword, forKey: UserDefaultsKey.privacyLogPassword.rawValue)
                             UserDefaults.standard.set(privacyLogIv, forKey: UserDefaultsKey.privacyLogIv.rawValue)
                             UserDefaults.standard.set(isEncodeBase64, forKey: UserDefaultsKey.isEncodeBase64.rawValue)
-                            self._startSocketConnect()
+                            if !isLocal {
+                                self._startSocketConnect()
+                            }
                         }.foregroundColor(.white)
                             .background(.green)
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
                             .frame(height: 40)
+                            .alert("Password available length is \(kCCKeySizeAES128)、\(kCCKeySizeAES192)、\(kCCKeySizeAES256)。 \n Iv should be \(kCCKeySizeAES128) bytes", isPresented: $isPrivacyError) {
+                                
+                            }
                         Button("取消") {
                             isEditConfig = false
                             switch ZXKitLogger.privacyResultEncodeType {

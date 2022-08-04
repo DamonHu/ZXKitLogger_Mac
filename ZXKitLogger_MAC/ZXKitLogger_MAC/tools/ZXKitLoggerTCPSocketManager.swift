@@ -14,12 +14,16 @@ class ZXKitLoggerTCPSocketManager: NSObject {
     var socketDidReceiveHandler: SocketDidReceiveHandler?
     var socketDidConnectHandler: SocketDidConnectHandler?
     private var timer: Timer?
+    private(set) var socketHost: String = "" //UDP的端口
+    private(set) var socketPort: UInt16 = 888 //UDP的端口
     private var acceptSocketList: [GCDAsyncSocket] = []
     private var connectSocketList: [GCDAsyncSocket] = []
 }
 
 extension ZXKitLoggerTCPSocketManager {
     func start(hostName:String, port: UInt16) {
+        self.socketHost = hostName
+        self.socketPort = port
         let queue = DispatchQueue.init(label: "zxkitlogger_socket")
         let socket = GCDAsyncSocket(delegate: self, delegateQueue: queue, socketQueue: queue)
         socket.isIPv4PreferredOverIPv6 = false
@@ -99,9 +103,7 @@ extension ZXKitLoggerTCPSocketManager: GCDAsyncSocketDelegate {
         item.mCreateDate = Date(timeIntervalSince1970: TimeInterval(msgList[2]) ?? 0)
         msgList.removeFirst(3)
         item.updateLogContent(type: item.mLogItemType, content: msgList.joined(separator: "|"))
-        if let host = sock.connectedHost {
-            handler(host, sock.connectedPort, item)
-        }
+        handler(self.socketHost, sock.connectedPort, item)
 
         sock.readData(withTimeout: -1, tag: tag)
     }

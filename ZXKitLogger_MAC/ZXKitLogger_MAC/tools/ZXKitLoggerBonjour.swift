@@ -71,15 +71,23 @@ extension ZXKitLoggerBonjour: NetServiceDelegate {
 //        print("mac info = ",info);
         if let hostName = sender.hostName {
             if ZXKitLogger.isTCP {
-                let tcpManager = ZXKitLoggerTCPSocketManager()
-                tcpManager.socketDidReceiveHandler = self.socketDidReceiveHandler
-                tcpManager.socketDidConnectHandler = { host, port in
+                if !self.mZXKitLoggerTCPSocketManager.contains(where: { manager in
+                    return manager.socketHost == hostName && manager.socketPort == sender.port
+                }) {
+                    let tcpManager = ZXKitLoggerTCPSocketManager()
+                    tcpManager.socketDidReceiveHandler = self.socketDidReceiveHandler
+                    tcpManager.socketDidConnectHandler = { host, port in
+                        if let bonjourDidConnectHandler = self.bonjourDidConnectHandler {
+                            bonjourDidConnectHandler(sender.name, hostName, port)
+                        }
+                    }
+                    tcpManager.start(hostName: hostName, port: UInt16(sender.port))
+                    self.mZXKitLoggerTCPSocketManager.append(tcpManager)
+                } else {
                     if let bonjourDidConnectHandler = self.bonjourDidConnectHandler {
-                        bonjourDidConnectHandler(sender.name, host, port)
+                        bonjourDidConnectHandler(sender.name, hostName, UInt16(sender.port))
                     }
                 }
-                tcpManager.start(hostName: hostName, port: UInt16(sender.port))
-                self.mZXKitLoggerTCPSocketManager.append(tcpManager)
             } else {
                 //TODO: 移除UDP广播
 //                ZXKitLoggerUDPSocketManager.shared.socketDidReceiveHandler = self.socketDidReceiveHandler
