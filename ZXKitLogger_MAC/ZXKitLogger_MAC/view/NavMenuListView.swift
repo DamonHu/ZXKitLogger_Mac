@@ -11,6 +11,11 @@ struct NavMenuListView: View {
     @Environment(\.openURL) var openURL
     @Binding var list: [ZXKitLoggerItem]    //显示在列表的log
     @Binding var isLocal: Bool
+    //本地加密配置
+    @State private var privacyLogPassword = UserDefaults.standard.string(forKey: UserDefaultsKey.privacyLogPassword.rawValue) ?? ZXKitLogger.privacyLogPassword
+    @State private var privacyLogIv = UserDefaults.standard.string(forKey: UserDefaultsKey.privacyLogIv.rawValue) ?? ZXKitLogger.privacyLogIv
+    @State private var isEncodeBase64 = UserDefaults.standard.bool(forKey: UserDefaultsKey.isEncodeBase64.rawValue)
+    //服务器配置
     @State private var domainText = UserDefaults.standard.string(forKey: UserDefaultsKey.domain.rawValue) ?? ZXKitLogger.socketDomain
     @State private var typeText =  UserDefaults.standard.string(forKey: UserDefaultsKey.socketType.rawValue) ?? ZXKitLogger.socketType
     @State private var fileList: [URL] = [] {
@@ -91,6 +96,50 @@ struct NavMenuListView: View {
             //中间内容布局
             if isEditConfig {
                 VStack(alignment: .leading, spacing: 10) {
+                    //解密配置
+                    HStack(alignment: .center, spacing: 10) {
+                        Text("")
+                            .padding()
+                            .frame(width: 5, height: 16, alignment: .center)
+                            .background(.red)
+                            .cornerRadius(6)
+                        Text("加密日志参数配置")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }.padding(.leading, 10)
+                    HStack(alignment: .center, spacing: 4) {
+                        Text("Password")
+                            .frame(width: 70, alignment: .center)
+                        TextField("12345678901234561234567890123456", text: $privacyLogPassword)
+                            .frame(height: 24)
+                            .border(.gray, width: 0.5)
+                            .textFieldStyle(.plain)
+
+                    }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                    HStack(alignment: .center, spacing: 4) {
+                        Text("Iv")
+                            .frame(width: 70, alignment: .center)
+                        TextField("abcdefghijklmnop", text: $privacyLogIv)
+                            .frame(height: 24)
+                            .border(.gray, width: 0.5)
+                            .textFieldStyle(.plain)
+                    }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                    HStack(alignment: .center, spacing: 4) {
+                        Text("Encode")
+                            .frame(width: 70, alignment: .center)
+                        HStack(alignment: .center, spacing: 0) {
+                            Button("HEX") {
+                                self.isEncodeBase64 = false
+                            }.background(isEncodeBase64 ? .gray : .green)
+                                .foregroundColor(.white)
+                                .frame(height: 40)
+                            Button("base64") {
+                                self.isEncodeBase64 = true
+                            }.background(isEncodeBase64 ? .green : .gray)
+                                .foregroundColor(.white)
+                                .frame(height: 40)
+                        }
+                    }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                    //远程配置
                     HStack(alignment: .center, spacing: 10) {
                         Text("")
                             .padding()
@@ -101,32 +150,37 @@ struct NavMenuListView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }.padding(.leading, 10)
                     HStack(alignment: .center, spacing: 4) {
-                        Text("domain")
-                            .frame(width: 50, alignment: .center)
+                        Text("Domain")
+                            .frame(width: 70, alignment: .center)
                         TextField("local", text: $domainText)
                             .frame(height: 24)
                             .border(.gray, width: 0.5)
                             .textFieldStyle(.plain)
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
 
-                    }.padding(.leading, 10)
+                    }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                     HStack(alignment: .center, spacing: 4) {
-                        Text("type")
-                            .frame(width: 50, alignment: .center)
+                        Text("Type")
+                            .frame(width: 70, alignment: .center)
                         TextField("_zxkitlogger", text: $typeText)
                             .frame(height: 24)
                             .border(.gray, width: 0.5)
                             .textFieldStyle(.plain)
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                    }.padding(.leading, 10)
+                    }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                     //确定
                     HStack(alignment: .center, spacing: 4) {
                         Button("确定") {
                             isEditConfig = false
                             ZXKitLogger.socketDomain = domainText
                             ZXKitLogger.socketType = typeText
+                            ZXKitLogger.privacyLogPassword = privacyLogPassword
+                            ZXKitLogger.privacyLogIv = privacyLogIv
+                            ZXKitLogger.privacyResultEncodeType = isEncodeBase64 ? .base64 : .hex
+
                             UserDefaults.standard.set(domainText, forKey: UserDefaultsKey.domain.rawValue)
                             UserDefaults.standard.set(typeText, forKey: UserDefaultsKey.socketType.rawValue)
+                            UserDefaults.standard.set(privacyLogPassword, forKey: UserDefaultsKey.privacyLogPassword.rawValue)
+                            UserDefaults.standard.set(privacyLogIv, forKey: UserDefaultsKey.privacyLogIv.rawValue)
+                            UserDefaults.standard.set(isEncodeBase64, forKey: UserDefaultsKey.isEncodeBase64.rawValue)
                             self._startSocketConnect()
                         }.foregroundColor(.white)
                             .background(.green)
@@ -134,6 +188,12 @@ struct NavMenuListView: View {
                             .frame(height: 40)
                         Button("取消") {
                             isEditConfig = false
+                            switch ZXKitLogger.privacyResultEncodeType {
+                                case .base64:
+                                    isEncodeBase64 = true
+                                default:
+                                    isEncodeBase64 = false
+                            }
                         }.foregroundColor(.white)
                             .background(.gray)
                             .frame(height: 40)
