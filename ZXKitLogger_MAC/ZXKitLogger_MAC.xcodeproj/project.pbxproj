@@ -10,6 +10,7 @@
 		53466A5D9661FAF808A6E8DE /* Pods_ZXKitLogger_MAC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BAF7CA5AD066AD2E2DE6EAB /* Pods_ZXKitLogger_MAC.framework */; };
 		E412A685289678BE0072BC84 /* SQLiteTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412A684289678BE0072BC84 /* SQLiteTool.swift */; };
 		E49BE7A2289BC8E3009AF799 /* ConstConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49BE7A1289BC8E3009AF799 /* ConstConfig.swift */; };
+		E49BE7A4289D26FD009AF799 /* LogParseTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49BE7A3289D26FC009AF799 /* LogParseTool.swift */; };
 		E4A014A32897D0E80042C5F4 /* ZXKitLoggerUDPSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A014A22897D0E80042C5F4 /* ZXKitLoggerUDPSocketManager.swift */; };
 		E4B89E902898E91700D23450 /* ZXKitLoggerBonjour.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B89E8F2898E91700D23450 /* ZXKitLoggerBonjour.swift */; };
 		E4BAF9CC2899068F00C5643A /* NavRemoteMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BAF9CB2899068F00C5643A /* NavRemoteMenuItemView.swift */; };
@@ -34,6 +35,7 @@
 		6F99287F9EEE7551DAFDA44D /* Pods-ZXKitLogger_MAC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXKitLogger_MAC.debug.xcconfig"; path = "Target Support Files/Pods-ZXKitLogger_MAC/Pods-ZXKitLogger_MAC.debug.xcconfig"; sourceTree = "<group>"; };
 		E412A684289678BE0072BC84 /* SQLiteTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteTool.swift; sourceTree = "<group>"; };
 		E49BE7A1289BC8E3009AF799 /* ConstConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstConfig.swift; sourceTree = "<group>"; };
+		E49BE7A3289D26FC009AF799 /* LogParseTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogParseTool.swift; sourceTree = "<group>"; };
 		E4A014A22897D0E80042C5F4 /* ZXKitLoggerUDPSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitLoggerUDPSocketManager.swift; sourceTree = "<group>"; };
 		E4B89E8F2898E91700D23450 /* ZXKitLoggerBonjour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXKitLoggerBonjour.swift; sourceTree = "<group>"; };
 		E4BAF9CB2899068F00C5643A /* NavRemoteMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavRemoteMenuItemView.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				E4A014A22897D0E80042C5F4 /* ZXKitLoggerUDPSocketManager.swift */,
 				E4B89E8F2898E91700D23450 /* ZXKitLoggerBonjour.swift */,
 				E4BAF9CF2899150F00C5643A /* ZXKitLoggerTCPSocketManager.swift */,
+				E49BE7A3289D26FC009AF799 /* LogParseTool.swift */,
 			);
 			path = tools;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				E4FB22E828952FD300CAFDD6 /* String+encode.swift in Sources */,
 				E4FB22D328951BF800CAFDD6 /* ContentView.swift in Sources */,
 				E4FB22D128951BF800CAFDD6 /* ZXKitLogger_MACApp.swift in Sources */,
+				E49BE7A4289D26FD009AF799 /* LogParseTool.swift in Sources */,
 				E4FB22EF2895352200CAFDD6 /* ZXKitLoggerCell.swift in Sources */,
 				E4FB22EC289531E400CAFDD6 /* Data+encode.swift in Sources */,
 			);

@@ -37,8 +37,13 @@ struct NavMenuListView: View {
             if let path = newValue {
                 if isLocal {
                     print(path)
-                    let tool = SQLiteTool(path: URL.init(fileURLWithPath: path))
-                    list = tool.getAllLog()
+                    if path.hasPrefix(".db") {
+                        let tool = SQLiteTool(path: URL.init(fileURLWithPath: path))
+                        list = tool.getAllLog()
+                    } else {
+                        let tool = LogParseTool(path: URL.init(fileURLWithPath: path))
+                        list = tool.getAllLog()
+                    }
                 } else {
                     list = remoteLogList[path] ?? []
                 }
@@ -231,7 +236,7 @@ struct NavMenuListView: View {
                 }.onDrop(of: ["public.file-url"], isTargeted: $dragOver) { providers in
                     providers.first?.loadDataRepresentation(forTypeIdentifier: "public.file-url", completionHandler: { (data, error) in
                         if let data = data, let path = String(data: data, encoding: String.Encoding.utf8), let url = URL(string: path) {
-                            if !url.pathExtension.hasPrefix("db") && !url.pathExtension.hasPrefix("json") {
+                            if !url.pathExtension.hasPrefix("db") && !url.pathExtension.hasPrefix("log") {
                                 showAlert = true
                                 return
                             }
@@ -242,7 +247,7 @@ struct NavMenuListView: View {
                         }
                     })
                     return true
-                }.alert("仅支持.db和.json文件", isPresented: $showAlert) {
+                }.alert("仅支持.db和.log文件", isPresented: $showAlert) {
 
                 }.onAppear {
                     if let pathBookDataList = UserDefaults.standard.object(forKey: UserDefaultsKey.fileListHistory.rawValue) as? [Data] {
