@@ -73,6 +73,10 @@ extension ZXKitLoggerTCPSocketManager: GCDAsyncSocketDelegate {
         if let socketDidConnectHandler = socketDidConnectHandler {
             socketDidConnectHandler(host, port)
         }
+        //首次连接发送初始化
+        guard let authData = "ZXKitLogger_tcp_auth".data(using: .utf8) else { return }
+        sock.write(authData, withTimeout: 20, tag: 0)
+        sock.readData(withTimeout: -1, tag: 0)
     }
 
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
@@ -83,11 +87,11 @@ extension ZXKitLoggerTCPSocketManager: GCDAsyncSocketDelegate {
     }
 
     func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
-        print("didWriteDataWithTag")
+//        print("didWriteDataWithTag")
     }
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
-        print("didReceive")
+//        print("didRead")
         //接受到需要log传输的消息，记录
         guard let receiveMsg = String(data: data, encoding: .utf8), let handler = self.socketDidReceiveHandler else {
             return

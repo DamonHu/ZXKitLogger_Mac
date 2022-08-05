@@ -36,7 +36,6 @@ class SQLiteTool {
                 //第三步
                 let item = ZXKitLoggerItem()
                 item.id = Int(sqlite3_column_int(queryStatement, 0))
-//                let logContent = sqlite3_column_text(queryStatement, 1)
                 item.mLogItemType = ZXKitLogType.init(rawValue: Int(sqlite3_column_int(queryStatement, 2)))
                 item.mLogDebugContent = String(cString: sqlite3_column_text(queryStatement, 4))
                 //更新内容
@@ -45,9 +44,6 @@ class SQLiteTool {
                 //时间
                 let time = sqlite3_column_double(queryStatement, 3)
                 item.mCreateDate = Date(timeIntervalSince1970: time)
-//                if let log = log {
-//                    logList.append((Int(id), Int(logType), "\(String(cString: log))"))
-//                }
                 logList.append(item)
             }
         }
