@@ -8,6 +8,10 @@
 
 [ZXKitLogger](https://github.com/DamonHu/ZXKitLogger) 使用SQLite存储日志信息，如果使用通用的SQLite查看工具，只是一条一条的表格，并且有的还收费。所以开发该工具方便查看配合`ZXKitLogger`更直观的查看数据。
 
+## 客户端下载
+
+[Releases](https://github.com/DamonHu/ZXKitLogger_Mac/releases)，下载`Release`中的`dmg`文件，拖拽进应用程序即可
+
 ## 本地日志
 
 将`ZXKitLogger`生成的`db`文件直接拖进左侧菜单栏，即可自动解析并根据日志类型显示颜色
