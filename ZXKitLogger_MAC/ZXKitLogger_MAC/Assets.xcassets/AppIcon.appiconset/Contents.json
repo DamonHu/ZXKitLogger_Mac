@@ -3,61 +3,61 @@
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacMicro_16pt.png",
+      "filename" : "log_logoMacHuge_512ptMacMicro_16pt.png",
       "scale" : "1x"
     },
     {
       "size" : "16x16",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacMicro_16pt@2x.png",
+      "filename" : "log_logoMacHuge_512ptMacMicro_16pt@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacSmall_32pt.png",
+      "filename" : "log_logoMacHuge_512ptMacSmall_32pt.png",
       "scale" : "1x"
     },
     {
       "size" : "32x32",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacSmall_32pt@2x.png",
+      "filename" : "log_logoMacHuge_512ptMacSmall_32pt@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacMedium_128pt.png",
+      "filename" : "log_logoMacHuge_512ptMacMedium_128pt.png",
       "scale" : "1x"
     },
     {
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacMedium_128pt@2x.png",
+      "filename" : "log_logoMacHuge_512ptMacMedium_128pt@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacLarge_256pt.png",
+      "filename" : "log_logoMacHuge_512ptMacLarge_256pt.png",
       "scale" : "1x"
     },
     {
       "size" : "256x256",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacLarge_256pt@2x.png",
+      "filename" : "log_logoMacHuge_512ptMacLarge_256pt@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacHuge_512pt.png",
+      "filename" : "log_logoMacHuge_512ptMacHuge_512pt.png",
       "scale" : "1x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "log_logoMacHuge_5125ptMacHuge_512pt@2x.png",
+      "filename" : "log_logoMacHuge_512ptMacHuge_512pt@2x.png",
       "scale" : "2x"
     }
   ],
