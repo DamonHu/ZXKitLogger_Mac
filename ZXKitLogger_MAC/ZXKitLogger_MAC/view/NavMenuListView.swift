@@ -123,7 +123,7 @@ struct NavMenuListView: View {
                             .frame(height: 24)
                             .border(.gray, width: 0.5)
                             .textFieldStyle(.plain)
-
+                        
                     }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                     HStack(alignment: .center, spacing: 4) {
                         Text("Iv")
@@ -166,7 +166,7 @@ struct NavMenuListView: View {
                             .frame(height: 24)
                             .border(.gray, width: 0.5)
                             .textFieldStyle(.plain)
-
+                        
                     }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                     HStack(alignment: .center, spacing: 4) {
                         Text("Type")
@@ -189,7 +189,7 @@ struct NavMenuListView: View {
                             ZXKitLogger.privacyLogPassword = privacyLogPassword
                             ZXKitLogger.privacyLogIv = privacyLogIv
                             ZXKitLogger.privacyResultEncodeType = isEncodeBase64 ? .base64 : .hex
-
+                            
                             UserDefaults.standard.set(domainText, forKey: UserDefaultsKey.domain.rawValue)
                             UserDefaults.standard.set(typeText, forKey: UserDefaultsKey.socketType.rawValue)
                             UserDefaults.standard.set(privacyLogPassword, forKey: UserDefaultsKey.privacyLogPassword.rawValue)
@@ -208,10 +208,10 @@ struct NavMenuListView: View {
                         Button("取消") {
                             isEditConfig = false
                             switch ZXKitLogger.privacyResultEncodeType {
-                                case .base64:
-                                    isEncodeBase64 = true
-                                default:
-                                    isEncodeBase64 = false
+                            case .base64:
+                                isEncodeBase64 = true
+                            default:
+                                isEncodeBase64 = false
                             }
                         }.foregroundColor(.white)
                             .background(.gray)
@@ -248,7 +248,7 @@ struct NavMenuListView: View {
                     })
                     return true
                 }.alert("仅支持.db和.log文件", isPresented: $showAlert) {
-
+                    
                 }.onAppear {
                     if let pathBookDataList = UserDefaults.standard.object(forKey: UserDefaultsKey.fileListHistory.rawValue) as? [Data] {
                         self.fileList = pathBookDataList.compactMap({ data in
